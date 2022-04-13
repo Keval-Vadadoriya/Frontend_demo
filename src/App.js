@@ -6,7 +6,7 @@ import LoginForm from "./components/forms/Login-Form";
 import Header from "./components/layout/Header";
 import Worker from "./components/worker/Worker";
 import Projects from "./components/projects/Projects";
-import MyProjects from "./components/my projects /MyProjects";
+import MyProjects from "./components/my projects/MyProjects";
 import Profile from "./components/profile/Profile";
 import Review from "./components/reviews/Review";
 import Chat from "./components/chats/Chat";

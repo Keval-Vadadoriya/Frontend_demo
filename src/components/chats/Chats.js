@@ -268,7 +268,7 @@ function Chats() {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={12} sx={{ height: { xs: "77vh", md: "77vh" } }}>
+        <Grid item xs={12} sx={{ height: "77vh" }}>
           <Box className={classes.chatList}>
             {messageList && messageList}
             <Box ref={messagesEndRef} />
@@ -277,7 +277,6 @@ function Chats() {
       </Grid>
       <Grid
         container
-        xs={12}
         component="form"
         onSubmit={sendMessageHandler}
         className={classes.sendMessage}

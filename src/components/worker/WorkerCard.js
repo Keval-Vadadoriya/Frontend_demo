@@ -39,7 +39,7 @@ function WorkerCard(props) {
             minWidth: "150px",
             minHeight: "150px",
             boxShadow: `0px 0px 10px ${
-              props.availability === false ? "rgb(247, 130, 35)" : "green"
+              props.availability === false ? "red" : "green"
             }`,
           }}
         />
