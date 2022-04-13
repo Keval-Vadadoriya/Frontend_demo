@@ -44,7 +44,15 @@ const Home = () => {
 
   return (
     <>
-      <Box sx={{ height: "110%", backgroundColor: "white" }}>
+      <Box
+        sx={{
+          height: "110%",
+          backgroundColor: "white",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        }}
+      >
         <Outlet />
       </Box>
     </>

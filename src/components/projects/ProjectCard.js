@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px",
     border: "1px dashed black",
     borderRadius: "20px",
-
+    zIndex: 1,
     transition: "all 0.5s ease",
     "&:hover": {
-      transform: "scale(1.03)",
+      transform: "scale(0.98)",
+
       borderRadius: "30px",
       backgroundColor: theme.palette.third.light,
     },

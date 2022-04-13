@@ -1,15 +1,9 @@
 import { Fragment, useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Fade, Grid, Typography } from "@mui/material";
 import { chatActions } from "../../store/actions/chat-actions";
-import {
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-} from "@mui/material";
+import { List, ListItem, Avatar } from "@mui/material";
 import { makeStyles, useTheme } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   chat: {
@@ -17,12 +11,12 @@ const useStyles = makeStyles((theme) => ({
     top: 60,
     height: "92.5vh",
 
-    backgroundColor: theme.palette.primary.extra,
+    backgroundColor: theme.palette.fifth.light,
   },
   chatList: {
     boxSizing: "border-box",
     width: "100%",
-    height: "80vh",
+    height: "85vh",
     "&::-webkit-scrollbar": {
       display: "none",
     },
@@ -38,18 +32,17 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: theme.palette.third.extra,
       textColor: "white",
+      border: `1px solid ${theme.palette.secondary.main}`,
     },
   },
   userName: {
-    // borderRadius: 10,
-    // margin: "5px",
     padding: 5,
-    fontSize: 30,
-    // marginLeft: 1,
+    fontSize: "25px",
+    fontFamily: "Arvo",
     position: "sticky",
-    top: "65px",
+    top: "55px",
     zIndex: "1",
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.extra,
     color: theme.palette.third.light,
   },
 }));
@@ -94,29 +87,42 @@ const Chat = () => {
           component={NavLink}
           to={`/chats/${worker.user._id}`}
           className={classes.chatListItem}
+          sx={{ display: "flex", justifyContent: "flex-start" }}
           style={({ isActive }) =>
-            isActive ? { backgroundColor: theme.palette.fifth.light } : {}
+            isActive
+              ? {
+                  backgroundColor: theme.palette.fifth.light,
+                  border: `1px solid ${theme.palette.secondary.main}`,
+                }
+              : {}
           }
         >
-          <ListItemAvatar>
-            <Avatar
-              src={`${process.env.REACT_APP_HOST}/${worker.user.avatar}`}
-            />
-          </ListItemAvatar>
-          <ListItemText
-            id={worker.user._id}
-            primary={`${worker.user.name}`}
-            sx={{ color: "black", fontFamily: "Arvo" }}
+          <Avatar
+            src={`${process.env.REACT_APP_HOST}/${worker.user.avatar}`}
+            sx={{ mardin: "10px" }}
           />
+          <Typography
+            sx={{
+              color: "black",
+              fontFamily: "Arvo",
+              paddingLeft: "5px",
+              flexGrow: "1",
+            }}
+          >
+            {worker.user.name}
+          </Typography>
           {worker.count !== 0 && (
-            <ListItemText id={worker.user._id}>
-              <Typography
-                variant="body2"
-                sx={{ color: "green", fontSize: "20px" }}
-              >
-                {worker.count}
-              </Typography>
-            </ListItemText>
+            <Avatar
+              sx={{
+                color: "white",
+                backgroundColor: "green",
+                fontSize: "17px",
+                height: "25px",
+                width: "25px",
+              }}
+            >
+              {worker.count}
+            </Avatar>
           )}
         </ListItem>
       );
@@ -125,36 +131,38 @@ const Chat = () => {
 
   return (
     <Fragment>
-      <Box sx={{ height: { xs: "91vh", md: "92.5vh" } }}>
-        <Grid container>
-          <Grid
-            item
-            xs={12}
-            md={3}
-            sx={{
-              display: { xs: page ? "auto" : "none", md: "block" },
-            }}
-          >
-            <Box className={classes.chat}>
-              <Box className={classes.userName}>{user.name}</Box>
-              <List dense className={classes.chatList}>
-                {chatListUi && chatListUi}
-              </List>
-            </Box>
-          </Grid>
+      <Fade in={true} timeout={1000}>
+        <Box sx={{ height: { xs: "91vh", md: "92.5vh" } }}>
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              sx={{
+                display: { xs: page ? "auto" : "none", md: "block" },
+              }}
+            >
+              <Box className={classes.chat}>
+                <Box className={classes.userName}>{user.name}</Box>
+                <List dense className={classes.chatList}>
+                  {chatListUi && chatListUi}
+                </List>
+              </Box>
+            </Grid>
 
-          <Grid
-            item
-            xs={12}
-            md={9}
-            sx={{
-              backgroundColor: "gray",
-            }}
-          >
-            <Outlet />
+            <Grid
+              item
+              xs={12}
+              md={9}
+              sx={{
+                backgroundColor: "white",
+              }}
+            >
+              <Outlet />
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </Fade>
     </Fragment>
   );
 };

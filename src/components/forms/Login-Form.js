@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useMediaQuery } from "@mui/material";
+import { Fade, useMediaQuery } from "@mui/material";
 
 import {
   loggedInUser,
@@ -182,111 +182,119 @@ const LoginForm = () => {
   };
   const matches = useMediaQuery("(max-width:600px)");
   return (
-    <>
+    <><Fade in={true} timeout={1000}>
       <Box
         sx={{
           // marginTop: 8,
           height: "92.5vh",
           width: "100vw",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
           backgroundImage: "url(https://wallpaperaccess.com/full/2581470.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundSize: "100% 100%",
           backdropFilter: "brightness(50%)",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign In
-        </Typography>
         <Box
-          component="form"
-          noValidate
-          onSubmit={onSubmitHandler}
-          sx={{ mt: 3, width: { xs: "80%", md: "auto" } }}
+          sx={{
+            backdropFilter: "blur(5px)",
+            // marginTop: 8,
+            height: "92.5vh",
+            width: "100vw",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                error={!emailIsValid}
-                helperText={!emailIsValid ? "Please Enter Valid Email" : ""}
-                color="success"
-                helperText=""
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={changeEmailHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                error={!passwordIsValid}
-                color="success"
-                name="password"
-                label="Password"
-                helperText={
-                  !passwordIsValid ? "Minimum 7 characters required" : ""
-                }
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                onChange={changePasswordHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 3,
-              mb: 2,
-              color: theme.palette.secondary.main,
-              backgroundColor: theme.palette.third.extra,
-              "&:hover": {
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.third.light,
-              },
-            }}
-          >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Sign In
-          </Button>
-          <Grid container justifyContent="space-around">
-            <Grid item>
-              <Typography
-                variant="body2"
-                onClick={forgotPasswordHandler}
-                color="blue"
-                sx={{
-                  "&:hover": {
-                    color: theme.palette.secondary.main,
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                forgot password
-              </Typography>
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={onSubmitHandler}
+            sx={{ mt: 3, width: { xs: "80%", md: "auto" } }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  error={!emailIsValid}
+                  helperText={!emailIsValid ? "Please Enter Valid Email" : ""}
+                  color="success"
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={changeEmailHandler}
+                  sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  error={!passwordIsValid}
+                  color="success"
+                  name="password"
+                  label="Password"
+                  helperText={
+                    !passwordIsValid ? "Minimum 7 characters required" : ""
+                  }
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  onChange={changePasswordHandler}
+                  sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                />
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography variant="body2" component={Link} to={"/signup"}>
-                don't have an account? Sign up
-              </Typography>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                mt: 3,
+                mb: 2,
+                color: theme.palette.secondary.main,
+                backgroundColor: theme.palette.third.extra,
+                "&:hover": {
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.third.light,
+                },
+              }}
+            >
+              Sign In
+            </Button>
+            <Grid container justifyContent="space-around">
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  onClick={forgotPasswordHandler}
+                  color="blue"
+                  sx={{
+                    "&:hover": {
+                      color: theme.palette.secondary.main,
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  forgot password
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body2" component={Link} to={"/signup"}>
+                  don't have an account? Sign up
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
+      </Box></Fade>
 
       {/* Verify User Dialog */}
       <Dialog fullscreen={matches} open={open} onClose={handleVerifyUserClose}>

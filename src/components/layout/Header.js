@@ -35,6 +35,7 @@ import { userActions } from "../../store/user-slice";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.third.extra,
+    // background: theme.palette.third.extra,
     border: "3px dashed black",
     fontSize: "30px",
 

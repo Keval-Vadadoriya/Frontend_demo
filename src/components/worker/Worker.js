@@ -18,6 +18,7 @@ import {
   Slide,
   TextField,
   InputAdornment,
+  Fade,
 } from "@mui/material";
 
 import {
@@ -152,95 +153,97 @@ const Worker = () => {
 
   return (
     <Fragment>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          backgroundColor: theme.palette.fifth.light,
-        }}
-      >
+      <Fade in={true} timeout={1000}>
         <Box
           sx={{
-            height: { xs: "auto", md: "91.5vh" },
             display: "flex",
-            position: { xs: "auto", md: "sticky" },
-            top: { xs: "60px", md: "70px" },
-            flexDirection: "column",
-            backgroundColor: {
-              xs: theme.palette.third.light,
-            },
+            flexDirection: { xs: "column", sm: "row" },
+            backgroundColor: theme.palette.fifth.light,
           }}
         >
-          {!matches && (
-            <WorkerFilter
-              profession={profession}
-              location={location}
-              clearFilter={clearFilter}
-              filterWorkersBy={filterWorkersBy}
-              changeLocationHandler={changeLocationHandler}
-              changeProfessionHandler={changeProfessionHandler}
-              review={review}
-              changeReviewHandler={changeReviewHandler}
-              availability={availability}
-              changeAvailabilityHandler={changeAvailabilityHandler}
-            />
-          )}
-          {matches && (
-            <Button
-              variant="contained"
-              onClick={() => setFilter(true)}
-              sx={{
-                color: theme.palette.secondary.main,
-                backgroundColor: theme.palette.third.extra,
-              }}
-            >
-              Filter
-            </Button>
-          )}
-        </Box>
-        <Container
-          fixed
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <TextField
-            placeholder="Search Worker"
-            className={classes.searchBar}
-            variant="standard"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchTwoTone />
-                </InputAdornment>
-              ),
-              disableUnderline: true,
-            }}
-            onChange={searchHandler}
-          />
           <Box
             sx={{
+              height: { xs: "auto", md: "91.5vh" },
               display: "flex",
-              flexWrap: "wrap",
-              flexDirection: { xs: "column", md: "row" },
+              position: { xs: "auto", md: "sticky" },
+              top: { xs: "60px", md: "70px" },
+              flexDirection: "column",
+              backgroundColor: {
+                xs: theme.palette.third.light,
+              },
             }}
           >
-            {workerList}
+            {!matches && (
+              <WorkerFilter
+                profession={profession}
+                location={location}
+                clearFilter={clearFilter}
+                filterWorkersBy={filterWorkersBy}
+                changeLocationHandler={changeLocationHandler}
+                changeProfessionHandler={changeProfessionHandler}
+                review={review}
+                changeReviewHandler={changeReviewHandler}
+                availability={availability}
+                changeAvailabilityHandler={changeAvailabilityHandler}
+              />
+            )}
+            {matches && (
+              <Button
+                variant="contained"
+                onClick={() => setFilter(true)}
+                sx={{
+                  color: theme.palette.secondary.main,
+                  backgroundColor: theme.palette.third.extra,
+                }}
+              >
+                Filter
+              </Button>
+            )}
           </Box>
-
-          <Stack spacing={2} sx={{}} alignSelf="center">
-            <Pagination
-              count={Math.ceil(count / 10)}
-              page={page}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              sx={{ backgroundColor: theme.palette.third.extra }}
+          <Container
+            fixed
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <TextField
+              placeholder="Search Worker"
+              className={classes.searchBar}
+              variant="standard"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchTwoTone />
+                  </InputAdornment>
+                ),
+                disableUnderline: true,
+              }}
+              onChange={searchHandler}
             />
-          </Stack>
-        </Container>
-      </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              {workerList}
+            </Box>
+
+            <Stack spacing={2} sx={{}} alignSelf="center">
+              <Pagination
+                count={Math.ceil(count / 10)}
+                page={page}
+                onChange={handleChange}
+                variant="outlined"
+                color="secondary"
+                sx={{ backgroundColor: theme.palette.third.extra }}
+              />
+            </Stack>
+          </Container>
+        </Box>
+      </Fade>
       <Dialog fullScreen={matches} open={filter} TransitionComponent={Slide}>
         <DialogTitle
           sx={{

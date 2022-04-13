@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getWorker } from "../../store/actions/workers-action";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography, Avatar, Rating, Grid } from "@mui/material";
+import { Box, Typography, Avatar, Rating, Grid, Fade } from "@mui/material";
 import { useTheme } from "@mui/styles";
 import { makeStyles } from "@mui/styles";
-import { textAlign } from "@mui/system";
 const useStyles = makeStyles((theme) => ({
   link: {
     margin: "5px",
@@ -31,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
   gridItem: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+  },
+  gridItemDetail: {
+    display: "flex",
+    justifyContent: "flex-start",
   },
 }));
 function WorkerProfile() {
@@ -48,302 +52,306 @@ function WorkerProfile() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-        height: "91.5vh",
-        overflowY: "scroll",
-        backgroundColor: theme.palette.third.extra,
-      }}
-    >
+    <Fade in={true} timeout={1000}>
       <Box
         sx={{
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
+          flexDirection: "column",
+          height: "91.5vh",
+          overflowY: "scroll",
           backgroundColor: theme.palette.third.extra,
         }}
       >
-        <Typography
-          component={Link}
-          className={classes.link}
-          to={`review/${workerid.workerid}`}
-        >
-          Reviews
-        </Typography>
-        <Typography
-          className={classes.link}
-          component={Link}
-          to={`/chats/${workerid.workerid}`}
-        >
-          Chat
-        </Typography>
-      </Box>
-      {worker && (
         <Box
           sx={{
-            borderRadius: "20px",
-            marginTop: "20px",
-            minWidth: { xs: "330px", md: "500px" },
-            maxWidth: { xs: "370px", md: "900px" },
-            padding: "5px",
-            boxShadow: `5px 5px 10px grey`,
-            backgroundColor: theme.palette.third.light,
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            backgroundColor: theme.palette.third.extra,
           }}
         >
+          <Typography
+            component={Link}
+            className={classes.link}
+            to={`review/${workerid.workerid}`}
+          >
+            Reviews
+          </Typography>
+          <Typography
+            className={classes.link}
+            component={Link}
+            to={`/chats/${workerid.workerid}`}
+          >
+            Chat
+          </Typography>
+        </Box>
+        {worker && (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
+              borderRadius: "20px",
+              marginTop: "20px",
+              minWidth: { xs: "330px", md: "500px" },
+              maxWidth: { xs: "370px", md: "900px" },
+              padding: "5px",
+              boxShadow: `5px 5px 10px grey`,
+              backgroundColor: theme.palette.third.light,
             }}
           >
-            <Avatar
-              src={`${process.env.REACT_APP_HOST}/${worker.avatar}`}
-              sx={{
-                minWidth: "150px",
-                minHeight: "150px",
-                maxWidth: "200px",
-                maxHeight: "200px",
-                boxShadow: `0px 0px 10px ${
-                  worker.availability === false ? "rgb(247, 130, 35)" : "green"
-                }`,
-              }}
-            />
             <Box
               sx={{
-                alignSelf: "flex-start",
-                marginTop: "20px",
-                minWidth: { xs: "300px", md: "450px" },
-                maxWidth: { xs: "300px", md: "900px" },
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
               }}
             >
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Name
-                  </Typography>
+              <Avatar
+                src={`${process.env.REACT_APP_HOST}/${worker.avatar}`}
+                sx={{
+                  minWidth: "150px",
+                  minHeight: "150px",
+                  maxWidth: "200px",
+                  maxHeight: "200px",
+                  boxShadow: `0px 0px 10px ${
+                    worker.availability === false
+                      ? "rgb(247, 130, 35)"
+                      : "green"
+                  }`,
+                }}
+              />
+              <Box
+                sx={{
+                  alignSelf: "flex-start",
+                  marginTop: "20px",
+                  minWidth: { xs: "300px", md: "450px" },
+                  maxWidth: { xs: "300px", md: "900px" },
+                }}
+              >
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Name
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.name}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Rating
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Rating value={worker.review} readOnly />
+                  </Grid>
                 </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Rating
-                  </Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Rating value={worker.review} readOnly />
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Profession
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Profession
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.profession}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.profession}
-                  </Typography>
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Status
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Status
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                      color={worker.availability === true ? "green" : "red"}
+                    >
+                      {worker.availability === true
+                        ? "Available"
+                        : "Not Available"}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                    color={worker.availability === true ? "green" : "red"}
-                  >
-                    {worker.availability === true
-                      ? "Available"
-                      : "Not Available"}
-                  </Typography>
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Location
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Location
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.location}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.location}
-                  </Typography>
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Contact
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Contact
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.contact}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.contact}
-                  </Typography>
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Email
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Email
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    {" "}
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.email}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  {" "}
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.email}
-                  </Typography>
-                </Grid>
-              </Grid>
 
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    Age
-                  </Typography>
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      Age
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.age}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
+                <Grid container className={classes.grid}>
+                  <Grid item xs={4} className={classes.gridItem}>
+                    <Typography
+                      variant="body1"
+                      display="inline"
+                      color={theme.palette.secondary.main}
+                    >
+                      About
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={1} className={classes.gridItem}>
+                    :-
+                  </Grid>
+                  <Grid item xs={7} className={classes.gridItemDetail}>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                    >
+                      {worker.description}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.age}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container className={classes.grid}>
-                <Grid item xs={4} className={classes.gridItem}>
-                  <Typography
-                    variant="body1"
-                    display="inline"
-                    color={theme.palette.secondary.main}
-                  >
-                    About
-                  </Typography>
-                </Grid>
-                <Grid item xs={1} className={classes.gridItem}>
-                  :-
-                </Grid>
-                <Grid item xs={7}>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontFamily="Roboto"
-                    fontSize="20px"
-                  >
-                    {worker.description}
-                  </Typography>
-                </Grid>
-              </Grid>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      )}
-    </Box>
+        )}
+      </Box>
+    </Fade>
   );
 }
 

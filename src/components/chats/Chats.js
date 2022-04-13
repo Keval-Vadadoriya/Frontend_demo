@@ -12,6 +12,7 @@ import {
   Avatar,
   Container,
   FormControl,
+  Fade,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { socketActions } from "../../store/socket-slice";
@@ -21,6 +22,7 @@ import { snackbarActions } from "../../store/snackbar-slice";
 
 const useStyles = makeStyles((theme) => ({
   chatOwner: {
+    // backgroundColor: theme.palette.secondary.main,
     backgroundColor: theme.palette.secondary.main,
     display: "flex",
     color: "white",
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sendMessage: {
     backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
     position: "-webkit-sticky",
     position: "sticky",
     margin: 0,
@@ -60,7 +63,10 @@ const useStyles = makeStyles((theme) => ({
     // },
   },
   chatList: {
-    backgroundColor: theme.palette.primary.extra,
+    backgroundColor: theme.palette.fifth.light,
+    display: "flex",
+    flexDirection: "column",
+    // backgroundColor: theme.palette.primary.extra,
     height: "77vh",
     "&::-webkit-scrollbar": {
       display: "none",
@@ -69,8 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     margin: 10,
-    padding: 7,
-    borderRadius: 15,
+    // padding: 7,
   },
 }));
 
@@ -195,6 +200,16 @@ function Chats() {
           className={classes.message}
           sx={{
             textAlign: message.owner === userId ? "right" : "left",
+            alignSelf: message.owner === userId ? "flex-end" : "flex-start",
+            paddingLeft: message.owner !== userId ? "30px" : 0,
+            paddingRight: message.owner === userId ? "30px" : "0",
+            borderTopLeftRadius: message.owner !== userId ? 0 : 30,
+            borderTopRightRadius: message.owner === userId ? 0 : 30,
+            borderBottomLeftRadius: 30,
+            borderBottomRightRadius: 30,
+            paddingTop: "3px",
+            maxWidth: "60%",
+            minWidth: "30%",
             backgroundColor:
               message.owner !== userId && message.status === "sent"
                 ? "rgb(218, 255, 227)"
@@ -205,16 +220,17 @@ function Chats() {
             variant="h5"
             sx={{
               wordBreak: "break-word",
-              fontSize: { xs: "20px", md: "25px" },
+              fontSize: { xs: "17px", md: "20px" },
               fontFamily: "Roboto",
             }}
           >
             {message.message}
             <Typography
               sx={{
-                fontSize: { xs: "10px", md: "15px" },
+                fontSize: { xs: "7px", md: "13px" },
                 fontStyle: "italic",
                 fontFamily: "Arvo",
+                color: "gray",
               }}
             >{`${date.toLocaleString("en-US", {
               hour: "numeric",
@@ -229,91 +245,94 @@ function Chats() {
     });
   }
   return (
-    <Box className={classes.chats}>
-      {/* <Container
+    <Fade in={true} timeout={1000}>
+      <Box className={classes.chats}>
+        {/* <Container
         sx={{
           position: "relative",
           display: "flex",
           flexDirection: "column",
         }}
       > */}
-      <Grid container>
-        <Grid item xs={12} className={classes.chatOwner}>
-          <Button
-            onClick={() => {
-              dispatch(snackbarActions.setPage({ page: true }));
-              navigate("/chats");
-            }}
-          >
-            <ArrowBackIosIcon sx={{ color: "white" }} />
-          </Button>
-          <Box
-            component={Link}
-            to={role === "user" ? `/workers/${receiverId.workerid}` : ""}
-            sx={{ display: "flex", textDecoration: "none" }}
-          >
-            <Avatar
-              src={`${process.env.REACT_APP_HOST}/${chatsOwner?.avatar}`}
-              sx={{ marginLeft: 0 }}
-            />
-            <Typography
-              sx={{
-                display: "inline",
-                marginLeft: 3,
-                fontSize: 25,
-                color: "white",
+        <Grid container>
+          <Grid item xs={12} className={classes.chatOwner}>
+            <Button
+              onClick={() => {
+                dispatch(snackbarActions.setPage({ page: true }));
+                navigate("/chats");
               }}
             >
-              {chatsOwner && chatsOwner.name}
-            </Typography>
-          </Box>
+              <ArrowBackIosIcon sx={{ color: "white" }} />
+            </Button>
+            <Box
+              component={Link}
+              to={role === "user" ? `/workers/${receiverId.workerid}` : ""}
+              sx={{ display: "flex", textDecoration: "none" }}
+            >
+              <Avatar
+                src={`${process.env.REACT_APP_HOST}/${chatsOwner?.avatar}`}
+                sx={{ marginLeft: 0 }}
+              />
+              <Typography
+                sx={{
+                  display: "inline",
+                  marginLeft: 3,
+                  fontSize: 25,
+                  fontFamily: "Arvo",
+                  color: "white",
+                }}
+              >
+                {chatsOwner && chatsOwner.name}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sx={{ height: "77vh" }}>
+            <Box className={classes.chatList}>
+              {messageList && messageList}
+              <Box ref={messagesEndRef} />
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sx={{ height: "77vh" }}>
-          <Box className={classes.chatList}>
-            {messageList && messageList}
-            <Box ref={messagesEndRef} />
-          </Box>
+        <Grid
+          container
+          component="form"
+          onSubmit={sendMessageHandler}
+          className={classes.sendMessage}
+        >
+          <Grid item xs={10} md={11}>
+            <FormControl fullWidth>
+              <TextField
+                autoComplete="message"
+                name="Message"
+                required
+                variant="filled"
+                fullWidth
+                id="Message"
+                label="Message"
+                autoFocus
+                value={message}
+                onChange={changeMessageHandler}
+                sx={{
+                  // color: "black",
+                  backgroundColor: "white",
+                  borderRadius: "5px",
+                  color: "black",
+                  "& label.Mui-focused": {
+                    color: theme.palette.secondary.main,
+                  },
+                }}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={1}>
+            <Button type="submit">
+              <SendIcon fontSize="large" sx={{ color: "white" }} />
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid
-        container
-        component="form"
-        onSubmit={sendMessageHandler}
-        className={classes.sendMessage}
-      >
-        <Grid item xs={10} md={11}>
-          <FormControl fullWidth>
-            <TextField
-              autoComplete="message"
-              name="Message"
-              required
-              variant="filled"
-              fullWidth
-              id="Message"
-              label="Message"
-              autoFocus
-              value={message}
-              onChange={changeMessageHandler}
-              sx={{
-                // color: "black",
-                backgroundColor: "white",
-                borderRadius: "5px",
-                color: "black",
-                "& label.Mui-focused": {
-                  color: theme.palette.secondary.main,
-                },
-              }}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={1}>
-          <Button type="submit">
-            <SendIcon fontSize="large" sx={{ color: "white" }} />
-          </Button>
-        </Grid>
-      </Grid>
-      {/* </Container> */}
-    </Box>
+        {/* </Container> */}
+      </Box>
+    </Fade>
   );
 }
 

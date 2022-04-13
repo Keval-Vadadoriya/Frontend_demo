@@ -16,8 +16,6 @@ import {
   TextField,
   DialogActions,
   Button,
-  Container,
-  CssBaseline,
   Box,
   Avatar,
   Typography,
@@ -27,13 +25,21 @@ import {
   Select,
   MenuItem,
   useMediaQuery,
+  Fade,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { snackbarActions } from "../../store/snackbar-slice";
 import { useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
+const useStyles = makeStyles((theme) => ({
+  input: {
+    backgroundColor: "rgba(256,256,256,0)",
+  },
+}));
 
 const SignupForm = () => {
   const theme = useTheme();
+  const classes = useStyles();
   const matches = useMediaQuery("(max-width:600px)");
   const [touched, setTouched] = useState(false);
   const [open, setOpen] = useState(false);
@@ -184,209 +190,239 @@ const SignupForm = () => {
   //return
   return (
     <>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "92.5vh",
-          width: "100vw",
-          backgroundImage: "url(https://wallpaperaccess.com/full/2581470.jpg)",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "100% 100%",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
+      <Fade in={true} timeout={1000}>
         <Box
-          component="form"
-          onSubmit={SubmitHandler}
-          sx={{ mt: 3, width: { xs: "80%", md: "40%" } }}
-          onClick={() => setTouched(true)}
+          sx={{
+            // height: "92.5vh",
+            width: "100vw",
+            backgroundImage:
+              "url(https://wallpaperaccess.com/full/2581470.jpg)",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 100%",
+          }}
         >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormControl fullWidth required error={touched && !roleIsValid}>
-                <InputLabel id="role">Role</InputLabel>
-                <Select
-                  labelId="role"
-                  id="role"
-                  value={role}
-                  label="Role"
-                  color="success"
-                  onChange={changeRole}
-                  sx={{ backgroundColor: theme.palette.third.light }}
-                >
-                  <MenuItem value={""} disabled hidden>
-                    {"Select Role"}
-                  </MenuItem>
-                  <MenuItem value={"user"}>{"User"}</MenuItem>
-                  <MenuItem value={"worker"}>{"Worker"}</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="given-name"
-                error={touched && !nameIsValid}
-                color="success"
-                name="Name"
-                helperText={!nameIsValid ? "Name is required" : ""}
-                required
-                fullWidth
-                id="Name"
-                label="Name"
-                onChange={changeNameHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                error={touched && !emailIsValid}
-                color="success"
-                helperText={!emailIsValid ? "Please Enter Valid Email" : ""}
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                onChange={changeEmailHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                error={touched && !passwordIsValid}
-                color="success"
-                helperText={
-                  !passwordIsValid ? "Minimum 7 characters required" : ""
-                }
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-                onChange={changePasswordHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                error={touched && !confirmPasswordIsValid}
-                color="success"
-                helperText={
-                  !confirmPasswordIsValid
-                    ? "Confirm Password Should be same as Password"
-                    : ""
-                }
-                name="confirm password"
-                label="Confirm Password"
-                type="password"
-                id="confirm password"
-                autoComplete="new-password"
-                onChange={changeConfirmPasswordHandler}
-                sx={{ backgroundColor: theme.palette.third.light }}
-              />
-            </Grid>
-            {role === "worker" && (
-              <Grid item xs={12}>
-                <FormControl
-                  fullWidth
-                  required
-                  error={touched && !professionIsValid}
-                >
-                  <InputLabel id="profession">Profession</InputLabel>
-                  <Select
-                    labelId="profession"
-                    id="profession"
-                    helperText={
-                      !professionIsValid ? "profession is required" : ""
-                    }
-                    value={profession}
-                    label="Profession"
-                    color="success"
-                    required
-                    sx={{ backgroundColor: theme.palette.third.light }}
-                    onChange={changeProfessionHandler}
-                  >
-                    <MenuItem value={"none"} disabled hidden>
-                      {"Select Profession"}
-                    </MenuItem>
-                    <MenuItem value={"carpenter"}>{"Carpenter"}</MenuItem>
-                    <MenuItem value={"plumber"}>{"Plumber"}</MenuItem>
-                    <MenuItem value={"electrician"}>{"Electrician"}</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-            {role === "worker" && (
-              <Grid item xs={12}>
-                <FormControl
-                  fullWidth
-                  required
-                  error={touched && !locationIsValid}
-                >
-                  <InputLabel id="location">Location</InputLabel>
-                  <Select
-                    labelId="location"
-                    id="location"
-                    helperText={!locationIsValid ? "location is required" : ""}
-                    value={location}
-                    color="success"
-                    required
-                    label="Location"
-                    onChange={changeLocationHandler}
-                    sx={{ backgroundColor: theme.palette.third.light }}
-                  >
-                    <MenuItem value={"none"} disabled hidden>
-                      {"Select Location"}
-                    </MenuItem>
-                    <MenuItem value={"surat"}>{"Surat"}</MenuItem>
-                    <MenuItem value={"anand"}>{"Anand"}</MenuItem>
-                    <MenuItem value={"vadodara"}>{"Vadodara"}</MenuItem>
-                    <MenuItem value={"ahmedabad"}>{"Ahmedabad"}</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
+          <Box
             sx={{
-              mt: 3,
-              mb: 2,
-              color: theme.palette.secondary.main,
-              backgroundColor: theme.palette.third.extra,
-              "&:hover": {
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.third.light,
-              },
+              backdropFilter: "blur(5px)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "92.5vh",
+              width: "100vw",
+              overflowY: "scroll",
+              overflowX: "hidden",
             }}
           >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Typography variant="body2" component={Link} to={"/login"}>
-                Already have an account? Sign in
-              </Typography>
-            </Grid>
-          </Grid>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign up
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={SubmitHandler}
+              sx={{
+                mt: { xs: 1, md: 3 },
+                width: { xs: "80%", md: "40%" },
+              }}
+              onClick={() => setTouched(true)}
+            >
+              <Grid container spacing={1}>
+                <Grid item xs={12}>
+                  <FormControl
+                    fullWidth
+                    required
+                    error={touched && !roleIsValid}
+                  >
+                    <InputLabel id="role">Role</InputLabel>
+                    <Select
+                      className={classes.input}
+                      labelId="role"
+                      id="role"
+                      value={role}
+                      label="Role"
+                      color="success"
+                      onChange={changeRole}
+                    >
+                      <MenuItem value={""} disabled hidden>
+                        {"Select Role"}
+                      </MenuItem>
+                      <MenuItem value={"user"}>{"User"}</MenuItem>
+                      <MenuItem value={"worker"}>{"Worker"}</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.input}
+                    autoComplete="given-name"
+                    error={touched && !nameIsValid}
+                    color="success"
+                    name="Name"
+                    helperText={!nameIsValid ? "Name is required" : ""}
+                    required
+                    fullWidth
+                    id="Name"
+                    label="Name"
+                    // FormHelperTextProps={{
+                    //   classes: {
+                    //     root: classes.helperText,
+                    //   },
+                    //   // classes={{classes.helperText}}
+                    // }}
+                    onChange={changeNameHandler}
+                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    fullWidth
+                    error={touched && !emailIsValid}
+                    color="success"
+                    helperText={!emailIsValid ? "Please Enter Valid Email" : ""}
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    onChange={changeEmailHandler}
+                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    fullWidth
+                    error={touched && !passwordIsValid}
+                    color="success"
+                    helperText={
+                      !passwordIsValid ? "Minimum 7 characters required" : ""
+                    }
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="new-password"
+                    onChange={changePasswordHandler}
+                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    fullWidth
+                    error={touched && !confirmPasswordIsValid}
+                    color="success"
+                    helperText={
+                      !confirmPasswordIsValid
+                        ? "Confirm Password Should be same as Password"
+                        : ""
+                    }
+                    name="confirm password"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirm password"
+                    autoComplete="new-password"
+                    onChange={changeConfirmPasswordHandler}
+                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                  />
+                </Grid>
+                {role === "worker" && (
+                  <Grid item xs={12}>
+                    <FormControl
+                      fullWidth
+                      required
+                      error={touched && !professionIsValid}
+                    >
+                      <InputLabel id="profession">Profession</InputLabel>
+                      <Select
+                        className={classes.input}
+                        labelId="profession"
+                        id="profession"
+                        value={profession}
+                        label="Profession"
+                        color="success"
+                        required
+                        sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                        onChange={changeProfessionHandler}
+                      >
+                        <MenuItem value={"none"} disabled hidden>
+                          {"Select Profession"}
+                        </MenuItem>
+                        <MenuItem value={"carpenter"}>{"Carpenter"}</MenuItem>
+                        <MenuItem value={"plumber"}>{"Plumber"}</MenuItem>
+                        <MenuItem value={"electrician"}>
+                          {"Electrician"}
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                )}
+                {role === "worker" && (
+                  <Grid item xs={12}>
+                    <FormControl
+                      fullWidth
+                      required
+                      error={touched && !locationIsValid}
+                    >
+                      <InputLabel id="location">Location</InputLabel>
+                      <Select
+                        className={classes.input}
+                        labelId="location"
+                        id="location"
+                        value={location}
+                        color="success"
+                        required
+                        label="Location"
+                        onChange={changeLocationHandler}
+                        sx={{ backgroundColor: "rgba(256,256,256,0)" }}
+                      >
+                        <MenuItem value={"none"} disabled hidden>
+                          {"Select Location"}
+                        </MenuItem>
+                        <MenuItem value={"surat"}>{"Surat"}</MenuItem>
+                        <MenuItem value={"anand"}>{"Anand"}</MenuItem>
+                        <MenuItem value={"vadodara"}>{"Vadodara"}</MenuItem>
+                        <MenuItem value={"ahmedabad"}>{"Ahmedabad"}</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                )}
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{
+                  mt: { xs: 1, md: 3 },
+                  mb: 2,
+                  color: theme.palette.secondary.main,
+                  backgroundColor: theme.palette.third.extra,
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.third.light,
+                  },
+                }}
+              >
+                Sign Up
+              </Button>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Typography variant="body2" component={Link} to={"/login"}>
+                    Already have an account? Sign in
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
         </Box>
-      </Box>
+      </Fade>
       <Dialog fullScreen={matches} open={open} onClose={handleClose}>
         <DialogTitle
           sx={{

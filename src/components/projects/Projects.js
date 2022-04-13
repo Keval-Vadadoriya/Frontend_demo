@@ -21,6 +21,7 @@ import {
   useMediaQuery,
   TextField,
   InputAdornment,
+  Fade,
 } from "@mui/material";
 import { SearchTwoTone } from "@mui/icons-material";
 
@@ -135,57 +136,90 @@ const Projects = () => {
 
   return (
     <Fragment>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          backgroundColor: theme.palette.primary.main,
-          width: { xs: "100%", md: "99%" },
-        }}
-      >
+      <Fade in={true} timeout={1000}>
         <Box
           sx={{
-            height: { xs: "80px", md: "90vh" },
             display: "flex",
-            justifyContent: { xs: "center", md: "flex-start" },
-            alignItems: { xs: "center", md: "flex-start" },
-            flexDirection: { xs: "row", md: "column" },
-            position: { xs: "auto", md: "sticky" },
-            top: { xs: "0", md: "79px" },
-            minWidth: 300,
-            maxWidth: { xs: "100%", md: 200 },
-            boxSizing: "border-box",
-            backgroundColor: {
-              xs: theme.palette.third.extra,
-            },
-            padding: { xs: 0, md: 2 },
+            flexDirection: { xs: "column", md: "row" },
+            backgroundColor: theme.palette.primary.main,
+            width: { xs: "100%", md: "99%" },
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => {
-              setFilter(true);
-            }}
+          <Box
             sx={{
-              width: "200px",
-              backgroundColor: "orange",
-              margin: "10px",
-              display: { xs: "auto", md: "none" },
+              height: { xs: "80px", md: "90vh" },
+              display: "flex",
+              justifyContent: { xs: "center", md: "flex-start" },
+              alignItems: { xs: "center", md: "flex-start" },
+              flexDirection: { xs: "row", md: "column" },
+              position: { xs: "auto", md: "sticky" },
+              top: { xs: "0", md: "79px" },
+              minWidth: 300,
+              maxWidth: { xs: "100%", md: 200 },
+              boxSizing: "border-box",
+              backgroundColor: {
+                xs: theme.palette.third.extra,
+              },
+              padding: { xs: 0, md: 2 },
             }}
           >
-            Filter
-          </Button>
-          <Dialog fullScreen={matches} open={filter}>
-            <DialogTitle
+            <Button
+              variant="contained"
+              onClick={() => {
+                setFilter(true);
+              }}
               sx={{
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.third.light,
+                width: "200px",
+                backgroundColor: "orange",
+                margin: "10px",
+                display: { xs: "auto", md: "none" },
+              }}
+            >
+              Filter
+            </Button>
+            <Dialog fullScreen={matches} open={filter}>
+              <DialogTitle
+                sx={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.third.light,
+                  fontFamily: "Arvo",
+                }}
+              >
+                Filter By
+              </DialogTitle>
+              <DialogContent>
+                <ProjectFilter
+                  profession={profession}
+                  location={location}
+                  clearFilter={clearFilter}
+                  filterProjectsBy={filterProjectsBy}
+                  changeLocationHandler={changeLocationHandler}
+                  changeProfessionHandler={changeProfessionHandler}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={() => {
+                    setFilter(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <Typography
+              variant="h4"
+              sx={{
+                display: { xs: "none", md: "block" },
+                marginBottom: "10px",
+                color: theme.palette.secondary.main,
                 fontFamily: "Arvo",
               }}
             >
               Filter By
-            </DialogTitle>
-            <DialogContent>
+            </Typography>
+
+            {!matches && (
               <ProjectFilter
                 profession={profession}
                 location={location}
@@ -194,111 +228,81 @@ const Projects = () => {
                 changeLocationHandler={changeLocationHandler}
                 changeProfessionHandler={changeProfessionHandler}
               />
-            </DialogContent>
-            <DialogActions>
-              <Button
-                onClick={() => {
-                  setFilter(false);
-                }}
-              >
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-          <Typography
-            variant="h4"
-            sx={{
-              display: { xs: "none", md: "block" },
-              marginBottom: "10px",
-              color: theme.palette.secondary.main,
-              fontFamily: "Arvo",
-            }}
-          >
-            Filter By
-          </Typography>
+            )}
 
-          {!matches && (
-            <ProjectFilter
-              profession={profession}
-              location={location}
-              clearFilter={clearFilter}
-              filterProjectsBy={filterProjectsBy}
-              changeLocationHandler={changeLocationHandler}
-              changeProfessionHandler={changeProfessionHandler}
-            />
-          )}
-
-          <Typography
-            variant="h4"
-            sx={{
-              display: { xs: "none", md: "block" },
-              color: theme.palette.secondary.main,
-              marginBottom: "10px",
-              fontFamily: "Arvo",
-            }}
-          >
-            Sort By
-          </Typography>
-          <Grid container>
-            <Grid item xs={12} md={12} sx={{ margin: "10px" }}>
-              <FormControl fullWidth>
-                <InputLabel id="sortBy">Sort By</InputLabel>
-                <Select
-                  labelId="sortBy"
-                  id="sortBy"
-                  value={sort}
-                  label="SortBy"
-                  onChange={changeSortHandler}
-                >
-                  <MenuItem value={"none"} disabled hidden>
-                    {"Select Sort Option"}
-                  </MenuItem>
-                  <MenuItem value="latest">Latest</MenuItem>
-                  <MenuItem value="oldest">Oldest</MenuItem>
-                  <MenuItem value="highestPrice">Highest Price</MenuItem>
-                  <MenuItem value="lowestPrice">Lowest Price</MenuItem>
-                </Select>
-              </FormControl>
+            <Typography
+              variant="h4"
+              sx={{
+                display: { xs: "none", md: "block" },
+                color: theme.palette.secondary.main,
+                marginBottom: "10px",
+                fontFamily: "Arvo",
+              }}
+            >
+              Sort By
+            </Typography>
+            <Grid container>
+              <Grid item xs={12} md={12} sx={{ margin: "10px" }}>
+                <FormControl fullWidth>
+                  <InputLabel id="sortBy">Sort By</InputLabel>
+                  <Select
+                    labelId="sortBy"
+                    id="sortBy"
+                    value={sort}
+                    label="SortBy"
+                    onChange={changeSortHandler}
+                  >
+                    <MenuItem value={"none"} disabled hidden>
+                      {"Select Sort Option"}
+                    </MenuItem>
+                    <MenuItem value="latest">Latest</MenuItem>
+                    <MenuItem value="oldest">Oldest</MenuItem>
+                    <MenuItem value="highestPrice">Highest Price</MenuItem>
+                    <MenuItem value="lowestPrice">Lowest Price</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            paddingTop: { xs: "10px", md: "0" },
-          }}
-        >
-          <TextField
-            placeholder="Search Project"
-            className={classes.searchBar}
-            variant="standard"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchTwoTone />
-                </InputAdornment>
-              ),
-              disableUnderline: true,
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              paddingTop: { xs: "10px", md: "0" },
+              height: "92.5vh",
+              overflow: "scroll",
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
             }}
-            onChange={searchHandler}
-          />
-          {projectList}
-
-          <Stack spacing={2} sx={{ alignSelf: "center" }}>
-            <Pagination
-              count={Math.ceil(count / 10)}
-              page={page}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              sx={{ backgroundColor: theme.palette.third.extra }}
+          >
+            <TextField
+              placeholder="Search Project"
+              className={classes.searchBar}
+              variant="standard"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchTwoTone />
+                  </InputAdornment>
+                ),
+                disableUnderline: true,
+              }}
+              onChange={searchHandler}
             />
-          </Stack>
+            {projectList}
+            <Stack spacing={2} sx={{ alignItems: "center" }}>
+              <Pagination
+                count={Math.ceil(count / 10)}
+                page={page}
+                onChange={handleChange}
+                variant="outlined"
+                color="secondary"
+                sx={{ backgroundColor: theme.palette.third.extra }}
+              />
+            </Stack>
+          </Box>
         </Box>
-      </Box>
+      </Fade>
     </Fragment>
   );
 };

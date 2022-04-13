@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Container,
+  Fade,
   Rating,
   TextField,
   Typography,
@@ -109,7 +110,7 @@ const Review = (props) => {
     });
   }
   return (
-    <>
+    <><Fade in={true} timeout={1000}>
       <Box sx={{ backgroundColor: theme.palette.third.extra }}>
         <Container
           sx={{
@@ -233,7 +234,7 @@ const Review = (props) => {
             )}
           </Box>
         </Container>
-      </Box>
+      </Box></Fade>
     </>
   );
 };

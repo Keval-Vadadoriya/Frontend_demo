@@ -21,7 +21,7 @@ function MyProjectCard({ project, onClick }) {
           borderRadius: "20px",
           transition: "all 0.5s ease",
           "&:hover": {
-            transform: "scale(1.05)",
+            transform: "scale(1.03)",
             borderRadius: "40px",
             backgroundColor: theme.palette.third.light,
           },

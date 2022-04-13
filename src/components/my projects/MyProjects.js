@@ -17,10 +17,13 @@ import {
   Box,
   useMediaQuery,
   Container,
+  Fade,
+  Fab,
+  Tooltip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { snackbarActions } from "../../store/snackbar-slice";
-
+import { Add } from "@mui/icons-material";
 import {
   myprojectActions,
   postProject,
@@ -134,146 +137,158 @@ const MyProjects = () => {
 
   return (
     <Fragment>
-      <Container>
-        <Box
-          sx={{
-            height: "100%",
-            backgroundColor: theme.palette.primary.main,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Button
-            onClick={addProjectHandler}
+      <Fade in={true} timeout={1000}>
+        <Container>
+          <Box
             sx={{
-              color: "white",
-              backgroundColor: theme.palette.secondary.main,
-              width: "150px",
-              alignSelf: "center",
-              margin: "5px",
-              padding: "10px",
-              fontSize: "15px",
+              height: "92.5vh",
+              backgroundColor: theme.palette.primary.main,
+              // display: "flex",
+              // flexDirection: "column",
+              overflow: "scroll",
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
             }}
           >
-            Post Project
-          </Button>
-          {projectList && projectList}
-          <Stack spacing={2} alignSelf="center">
-            <Pagination
-              count={Math.ceil(count / 10)}
-              page={page}
-              onChange={handleChange}
-              variant="outlined"
-              color="secondary"
-              sx={{ backgroundColor: theme.palette.third.extra }}
-            />
-          </Stack>
-          <Dialog
-            fullScreen={matches}
-            open={addProject}
-            component="form"
-            onSubmit={SubmitHandler}
-          >
-            <DialogTitle
+            {projectList && projectList}
+            <Box
               sx={{
-                backgroundColor: theme.palette.secondary.main,
-                color: theme.palette.third.light,
-                fontFamily: "Arvo",
+                display: "flex",
+                justifyContent: "flex-end",
+                marginRight: "50px",
               }}
             >
-              Add Project
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Please enter following details to add new project.
-              </DialogContentText>
-              <Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    autoFocus
-                    required
-                    margin="dense"
-                    id="Project Name"
-                    label="Project Name"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    onChange={changeProjectNameHandler}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    multiline
-                    margin="dense"
-                    id="description"
-                    label="Description"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    onChange={changeDescriptionHandler}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    margin="dense"
-                    id="Amount"
-                    label="amount"
-                    type="Number"
-                    fullWidth
-                    variant="standard"
-                    onChange={changeAmountHandler}
-                  />
-                </Grid>
-                <Grid item xs={12} marginTop={2} marginBottom={2}>
-                  <FormControl fullWidth required>
-                    <Select
-                      labelId="profession"
-                      id="profession"
-                      value={profession}
-                      label="Profession"
+              <Tooltip title="Add Project" placement="top">
+                <Fab
+                  onClick={addProjectHandler}
+                  aria-label="dskfb"
+                  color="success"
+                  sx={{ position: "absolute", bottom: "40px" }}
+                >
+                  <Add />
+                </Fab>
+              </Tooltip>
+            </Box>
+            <Stack spacing={2} display="flex" alignItems="center">
+              <Pagination
+                count={Math.ceil(count / 10)}
+                page={page}
+                onChange={handleChange}
+                variant="outlined"
+                color="secondary"
+                sx={{ backgroundColor: theme.palette.third.extra }}
+              />
+            </Stack>
+            <Dialog
+              fullScreen={matches}
+              open={addProject}
+              component="form"
+              onSubmit={SubmitHandler}
+            >
+              <DialogTitle
+                sx={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.third.light,
+                  fontFamily: "Arvo",
+                }}
+              >
+                Add Project
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Please enter following details to add new project.
+                </DialogContentText>
+                <Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="Project Name"
+                      label="Project Name"
+                      type="text"
+                      fullWidth
                       variant="standard"
-                      onChange={changeProfessionHandler}
-                    >
-                      <MenuItem value={"none"} disabled hidden>
-                        {"Select Profession"}
-                      </MenuItem>
-                      <MenuItem value={"carpenter"}>{"Carpenter"}</MenuItem>
-                      <MenuItem value={"plumber"}>{"Plumber"}</MenuItem>
-                      <MenuItem value={"electrician"}>{"Electrician"}</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} marginTop={2}>
-                  <FormControl fullWidth required>
-                    <Select
-                      labelId="location"
-                      id="location"
-                      value={location}
-                      label="Location"
-                      onChange={changeLocationHandler}
+                      onChange={changeProjectNameHandler}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      multiline
+                      margin="dense"
+                      id="description"
+                      label="Description"
+                      type="text"
+                      fullWidth
                       variant="standard"
-                    >
-                      <MenuItem value={"none"} disabled>
-                        {"Select Location"}
-                      </MenuItem>
-                      <MenuItem value={"surat"}>{"Surat"}</MenuItem>
-                      <MenuItem value={"anand"}>{"Anand"}</MenuItem>
-                      <MenuItem value={"vadodara"}>{"Vadodara"}</MenuItem>
-                      <MenuItem value={"ahmedabad"}>{"Ahmedabad"}</MenuItem>
-                    </Select>
-                  </FormControl>
+                      onChange={changeDescriptionHandler}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      margin="dense"
+                      id="Amount"
+                      label="amount"
+                      type="Number"
+                      fullWidth
+                      variant="standard"
+                      onChange={changeAmountHandler}
+                    />
+                  </Grid>
+                  <Grid item xs={12} marginTop={2} marginBottom={2}>
+                    <FormControl fullWidth required>
+                      <Select
+                        labelId="profession"
+                        id="profession"
+                        value={profession}
+                        label="Profession"
+                        variant="standard"
+                        onChange={changeProfessionHandler}
+                      >
+                        <MenuItem value={"none"} disabled hidden>
+                          {"Select Profession"}
+                        </MenuItem>
+                        <MenuItem value={"carpenter"}>{"Carpenter"}</MenuItem>
+                        <MenuItem value={"plumber"}>{"Plumber"}</MenuItem>
+                        <MenuItem value={"electrician"}>
+                          {"Electrician"}
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} marginTop={2}>
+                    <FormControl fullWidth required>
+                      <Select
+                        labelId="location"
+                        id="location"
+                        value={location}
+                        label="Location"
+                        onChange={changeLocationHandler}
+                        variant="standard"
+                      >
+                        <MenuItem value={"none"} disabled>
+                          {"Select Location"}
+                        </MenuItem>
+                        <MenuItem value={"surat"}>{"Surat"}</MenuItem>
+                        <MenuItem value={"anand"}>{"Anand"}</MenuItem>
+                        <MenuItem value={"vadodara"}>{"Vadodara"}</MenuItem>
+                        <MenuItem value={"ahmedabad"}>{"Ahmedabad"}</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Submit</Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
-      </Container>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit">Submit</Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+        </Container>
+      </Fade>
     </Fragment>
   );
 };

@@ -23,6 +23,7 @@ import {
   DialogContentText,
   DialogTitle,
   useMediaQuery,
+  Fade,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import { snackbarActions } from "../../store/snackbar-slice";
@@ -179,6 +180,7 @@ const Profile = () => {
 
   return (
     <>
+    <Fade in={true} timeout={1000}>
       <Box
         sx={{
           backgroundColor: theme.palette.third.light,
@@ -448,7 +450,7 @@ const Profile = () => {
             </Box>
           )}
         </Container>
-      </Box>
+      </Box></Fade>
       <Dialog
         fullScreen
         TransitionComponent={Transition}
