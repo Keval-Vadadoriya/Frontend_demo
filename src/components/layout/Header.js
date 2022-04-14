@@ -6,6 +6,8 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/styles";
 import logo from "../../logo.jpg";
+import logo2 from "../../logo2.png";
+import logo3 from "../../logo3.png";
 import ChatSharpIcon from "@mui/icons-material/ChatSharp";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
@@ -34,17 +36,16 @@ import { userActions } from "../../store/user-slice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.third.extra,
     // background: theme.palette.third.extra,
-    border: "3px dashed black",
+    // border: "3px dashed black",
     fontSize: "30px",
-
-    textAlign: "center",
-    borderTopLeftRadius: "25px",
-    borderBottomRightRadius: "25px",
-    color: "black",
-    height: 48,
-    padding: "0 30px",
+    fontWeight: 900,
+    // textAlign: "center",
+    // borderTopLeftRadius: "25px",
+    // borderBottomRightRadius: "25px",
+    // color: "black",
+    // height: 48,
+    // padding: "0 30px",
   },
   link: {
     margin: "5px",
@@ -128,9 +129,10 @@ const Header = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Avatar
-              src={logo}
+              src={logo2}
               sx={{
                 mr: 2,
+                backgroundColor: "rgba(256,256,256,0)",
                 display: {
                   xs: "none",
                   md: "flex",
@@ -253,7 +255,19 @@ const Header = () => {
                   textDecoration: "none",
                 }}
               >
-                <Tooltip title="Chats">
+                <Tooltip
+                  title="Chats"
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: theme.palette.third.light,
+                        backgroundColor: "gray",
+                        fontSize: "1em",
+                      },
+                    },
+                  }}
+                >
                   <Box
                     component={NavLink}
                     to={"/chats"}
@@ -275,7 +289,19 @@ const Header = () => {
                   </Box>
                 </Tooltip>
                 {role === "user" && (
-                  <Tooltip title="Workers">
+                  <Tooltip
+                    title="Workers"
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          color: theme.palette.third.light,
+                          backgroundColor: "gray",
+                          fontSize: "1em",
+                        },
+                      },
+                    }}
+                  >
                     <Box
                       component={NavLink}
                       to={"/workers"}
@@ -298,7 +324,19 @@ const Header = () => {
                   </Tooltip>
                 )}
                 {role === "user" && (
-                  <Tooltip title="My Projects">
+                  <Tooltip
+                    title="My Projects"
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          color: theme.palette.third.light,
+                          backgroundColor: "gray",
+                          fontSize: "1em",
+                        },
+                      },
+                    }}
+                  >
                     <Box
                       component={NavLink}
                       to={"/myprojects"}
@@ -321,7 +359,19 @@ const Header = () => {
                   </Tooltip>
                 )}
                 {role === "worker" && (
-                  <Tooltip title="Projects">
+                  <Tooltip
+                    title="Projects"
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          color: theme.palette.third.light,
+                          backgroundColor: "gray",
+                          fontSize: "1em",
+                        },
+                      },
+                    }}
+                  >
                     <Box
                       component={NavLink}
                       to={"/projects"}
@@ -348,7 +398,19 @@ const Header = () => {
 
             {token && (
               <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
+                <Tooltip
+                  title="Open settings"
+                  arrow
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        color: theme.palette.third.light,
+                        backgroundColor: "gray",
+                        fontSize: "1em",
+                      },
+                    },
+                  }}
+                >
                   <IconButton
                     onClick={handleOpenUserMenu}
                     sx={{

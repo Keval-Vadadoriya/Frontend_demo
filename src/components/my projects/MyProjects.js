@@ -159,7 +159,20 @@ const MyProjects = () => {
                 marginRight: "50px",
               }}
             >
-              <Tooltip title="Add Project" placement="top">
+              <Tooltip
+                title="Add Project"
+                placement="top"
+                arrow
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      color: theme.palette.third.light,
+                      backgroundColor: "gray",
+                      fontSize: "1em",
+                    },
+                  },
+                }}
+              >
                 <Fab
                   onClick={addProjectHandler}
                   aria-label="dskfb"

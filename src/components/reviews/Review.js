@@ -100,7 +100,7 @@ const Review = (props) => {
         <Box key={review._id} className={classes.review}>
           <Rating name="read-only" value={review.review} readOnly />
           <Typography variant="body1" color="black">
-            By {review.owner.name}
+            {review.owner.name}
           </Typography>
           <Typography variant="body2" color="black">
             {review.description}
@@ -110,41 +110,18 @@ const Review = (props) => {
     });
   }
   return (
-    <><Fade in={true} timeout={1000}>
-      <Box sx={{ backgroundColor: theme.palette.third.extra }}>
-        <Container
-          sx={{
-            backgroundColor: {
-              xs: theme.palette.third.extra,
-              md: theme.palette.secondary.main,
-            },
-            height: "93vh",
-            width: "100%",
-            overflow: "scroll",
-            "&::-webkit-scrollbar": {
-              // width: "5px",
-              display: "none",
-            },
-            // "&::-webkit-scrollbar-track": {
-            //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-            // },
-            // "&::-webkit-scrollbar-thumb": {
-            //   backgroundColor: "rgba(0,0,0,.1)",
-            //   outline: "1px solid slategrey",
-            // },
-          }}
-        >
-          <Box
+    <>
+      <Fade in={true} timeout={1000}>
+        <Box sx={{ backgroundColor: theme.palette.third.extra }}>
+          <Container
             sx={{
               backgroundColor: {
-                md: theme.palette.third.light,
-                xs: theme.palette.primary.dark,
+                xs: theme.palette.third.extra,
+                md: theme.palette.secondary.main,
               },
-              padding: "5px",
-              boxSizing: "border-box",
-              overflow: "scroll",
               height: "93vh",
+              width: "100%",
+              overflow: "scroll",
               "&::-webkit-scrollbar": {
                 // width: "5px",
                 display: "none",
@@ -159,82 +136,110 @@ const Review = (props) => {
               // },
             }}
           >
-            {reviews && reviewList}
-            {role === "user" && (
-              <Box
-                component="form"
-                onSubmit={addReviewHandler}
-                sx={{
-                  position: "sticky",
-                  bottom: "10px",
-                  margin: "10px",
-                  backgroundColor: {
-                    xs: theme.palette.third.light,
-                    md: theme.palette.secondary.main,
-                  },
-                  padding: "10px",
-                  borderRadius: "10px",
-                }}
-              >
-                <Typography
+            <Box
+              sx={{
+                backgroundColor: {
+                  md: theme.palette.third.light,
+                  xs: theme.palette.primary.dark,
+                },
+                padding: "5px",
+                boxSizing: "border-box",
+                overflow: "scroll",
+                height: "93vh",
+                "&::-webkit-scrollbar": {
+                  // width: "5px",
+                  display: "none",
+                },
+                // "&::-webkit-scrollbar-track": {
+                //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
+                // },
+                // "&::-webkit-scrollbar-thumb": {
+                //   backgroundColor: "rgba(0,0,0,.1)",
+                //   outline: "1px solid slategrey",
+                // },
+              }}
+            >
+              {reviews && reviewList}
+              {role === "user" && (
+                <Box
+                  component="form"
+                  onSubmit={addReviewHandler}
                   sx={{
-                    color: {
-                      xs: theme.palette.secondary.main,
-                      md: theme.palette.third.light,
+                    position: "sticky",
+                    bottom: "10px",
+                    margin: "10px",
+                    backgroundColor: {
+                      xs: theme.palette.third.light,
+                      md: theme.palette.secondary.main,
                     },
-                    paddingBottom: "5px",
-                    marginBottom: "5px",
-                    fontSize: { xs: "20px", md: "30px" },
-                  }}
-                >
-                  Add Review
-                </Typography>
-                <Rating value={initialRating} onChange={changeReviewHandler} />
-
-                <TextField
-                  required
-                  fullWidth
-                  multiline
-                  variant="filled"
-                  name="review-description"
-                  label="review-description"
-                  type="text"
-                  id="review-description"
-                  autoComplete="review-description"
-                  value={description}
-                  onChange={changeDescriptionHandler}
-                  sx={{
-                    backgroundColor: "white",
+                    padding: "10px",
                     borderRadius: "10px",
-                    "& label.Mui-focused": {
-                      color: theme.palette.secondary.main,
-                    },
-                  }}
-                  InputProps={{
-                    disableUnderline: true,
-                  }}
-                />
-
-                <Button
-                  type="submit"
-                  sx={{
-                    backgroundColor: "white",
-                    display: "block",
-                    marginTop: "5px",
-                    color: theme.palette.secondary.main,
-                    "&:hover": {
-                      backgroundColor: theme.palette.fifth.light,
-                      color: theme.palette.secondary.main,
-                    },
                   }}
                 >
-                  Submit
-                </Button>
-              </Box>
-            )}
-          </Box>
-        </Container>
-      </Box></Fade>
+                  <Typography
+                    sx={{
+                      color: {
+                        xs: theme.palette.secondary.main,
+                        md: theme.palette.third.light,
+                      },
+                      paddingBottom: "5px",
+                      marginBottom: "5px",
+                      fontSize: { xs: "20px", md: "30px" },
+                    }}
+                  >
+                    Add Review
+                  </Typography>
+                  <Rating
+                    value={initialRating}
+                    onChange={changeReviewHandler}
+                  />
+
+                  <TextField
+                    required
+                    fullWidth
+                    multiline
+                    variant="filled"
+                    name="review-description"
+                    label="review-description"
+                    type="text"
+                    id="review-description"
+                    autoComplete="review-description"
+                    value={description}
+                    onChange={changeDescriptionHandler}
+                    sx={{
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      "& label.Mui-focused": {
+                        color: theme.palette.secondary.main,
+                      },
+                    }}
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                  />
+
+                  <Button
+                    type="submit"
+                    sx={{
+                      backgroundColor: "white",
+                      display: "block",
+                      marginTop: "5px",
+                      color: theme.palette.secondary.main,
+                      "&:hover": {
+                        backgroundColor: theme.palette.fifth.light,
+                        color: theme.palette.secondary.main,
+                      },
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              )}
+            </Box>
+          </Container>
+        </Box>
+      </Fade>
     </>
   );
 };

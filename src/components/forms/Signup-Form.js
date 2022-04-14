@@ -66,6 +66,8 @@ const SignupForm = () => {
   if (token) {
     navigate("/");
   }
+
+  //handling error and success
   useEffect(() => {
     if (status === "Signup Successful") {
       setOpen(true);
@@ -159,6 +161,11 @@ const SignupForm = () => {
     } else {
       setPasswordIsValid(false);
     }
+    if (event.target.value.length !== confirmPassword) {
+      setConfirmPasswordIsValid(false);
+    } else {
+      setConfirmPasswordIsValid(true);
+    }
   };
   const changeConfirmPasswordHandler = (event) => {
     setConfirmPassword(event.target.value);
@@ -190,7 +197,7 @@ const SignupForm = () => {
   //return
   return (
     <>
-      <Fade in={true} timeout={1000}>
+      <Fade in={true} timeout={500}>
         <Box
           sx={{
             // height: "92.5vh",

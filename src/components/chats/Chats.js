@@ -22,20 +22,17 @@ import { snackbarActions } from "../../store/snackbar-slice";
 
 const useStyles = makeStyles((theme) => ({
   chatOwner: {
-    // backgroundColor: theme.palette.secondary.main,
     backgroundColor: theme.palette.secondary.main,
     display: "flex",
     color: "white",
     fontSize: 20,
     padding: 5,
-    // borderRadius: 10,
     position: "-webkit-sticky",
     position: "sticky",
     top: 0,
   },
   sendMessage: {
     backgroundColor: theme.palette.secondary.main,
-    // backgroundColor: theme.palette.secondary.main,
     position: "-webkit-sticky",
     position: "sticky",
     margin: 0,
@@ -53,20 +50,11 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-    // "&::-webkit-scrollbar-track": {
-    //   boxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-    //   webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.00)",
-    // },
-    // "&::-webkit-scrollbar-thumb": {
-    //   backgroundColor: "rgba(0,0,0,.1)",
-    //   outline: "1px solid slategrey",
-    // },
   },
   chatList: {
     backgroundColor: theme.palette.fifth.light,
     display: "flex",
     flexDirection: "column",
-    // backgroundColor: theme.palette.primary.extra,
     height: "77vh",
     "&::-webkit-scrollbar": {
       display: "none",
@@ -75,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     margin: 10,
-    // padding: 7,
   },
 }));
 
@@ -142,8 +129,10 @@ function Chats() {
     });
     dispatch(snackbarActions.setPage({ page: false }));
   }, []);
-  useEffect(async () => {
+  useEffect(() => {
     if (userId && role) {
+      socket.emit("addToChatList", userId, role, receiverId.workerid);
+
       socket.emit("getchats", userId, role, receiverId.workerid, (response) => {
         dispatch(
           chatActions.setChats({
@@ -154,7 +143,6 @@ function Chats() {
         );
         dispatch(chatActions.setChatList({ list: response.chatList }));
       });
-      socket.emit("addToChatList", userId, role, receiverId.workerid);
     }
   }, [receiverId.workerid, userId, role]);
 
@@ -247,13 +235,6 @@ function Chats() {
   return (
     <Fade in={true} timeout={1000}>
       <Box className={classes.chats}>
-        {/* <Container
-        sx={{
-          position: "relative",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      > */}
         <Grid container>
           <Grid item xs={12} className={classes.chatOwner}>
             <Button
@@ -276,8 +257,10 @@ function Chats() {
               <Typography
                 sx={{
                   display: "inline",
+                  display: "flex",
+                  alignItems: "center",
                   marginLeft: 3,
-                  fontSize: 25,
+                  fontSize: { xs: 20, md: 25 },
                   fontFamily: "Arvo",
                   color: "white",
                 }}
@@ -305,6 +288,7 @@ function Chats() {
                 autoComplete="message"
                 name="Message"
                 required
+                multiline
                 variant="filled"
                 fullWidth
                 id="Message"
@@ -313,7 +297,6 @@ function Chats() {
                 value={message}
                 onChange={changeMessageHandler}
                 sx={{
-                  // color: "black",
                   backgroundColor: "white",
                   borderRadius: "5px",
                   color: "black",
@@ -330,7 +313,6 @@ function Chats() {
             </Button>
           </Grid>
         </Grid>
-        {/* </Container> */}
       </Box>
     </Fade>
   );
