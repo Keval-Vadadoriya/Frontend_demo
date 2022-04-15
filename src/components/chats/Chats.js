@@ -71,13 +71,15 @@ function Chats() {
   const navigate = useNavigate();
   const classes = useStyles(theme);
   const receiverId = useParams();
-  let messageList;
   const messagesEndRef = useRef();
+  const dispatch = useDispatch();
+  const [message, setMessage] = useState("");
+  let messageList;
+
+  //redux states
   const userId = useSelector((state) => state.user.user._id);
   const role = useSelector((state) => state.login.role);
-  const dispatch = useDispatch();
   const socket = useSelector((state) => state.socket.socket);
-  const [message, setMessage] = useState("");
   const { chats, chatsOwner } = useSelector((state) => state.chat);
   const data = useSelector((state) => state.socket.data);
 
@@ -90,6 +92,7 @@ function Chats() {
     scrollToBottom();
   }, [chats[receiverId.workerid]]);
 
+  //emmiting delivered status
   useEffect(() => {
     if (data) {
       socket.emit(
@@ -106,6 +109,7 @@ function Chats() {
     }
   }, [data]);
 
+  //getting messages and delivered status
   useEffect(async () => {
     socket.removeAllListeners();
 
@@ -129,26 +133,29 @@ function Chats() {
     });
     dispatch(snackbarActions.setPage({ page: false }));
   }, []);
+
+  //adding to chatlist and getting chats
   useEffect(() => {
     if (userId && role) {
-      socket.emit("addToChatList", userId, role, receiverId.workerid);
-
-      socket.emit("getchats", userId, role, receiverId.workerid, (response) => {
-        dispatch(
-          chatActions.setChats({
-            chats: response.chats,
-            role,
-            receiverId: receiverId.workerid,
-          })
-        );
-        dispatch(chatActions.setChatList({ list: response.chatList }));
+      socket.emit("addToChatList", userId, role, receiverId.workerid,(response)=>{
+        if(response.status=='success'){
+          socket.emit("getchats", userId, role, receiverId.workerid, (response) => {
+            dispatch(
+              chatActions.setChats({
+                chats: response.chats,
+                role,
+                receiverId: receiverId.workerid,
+              })
+            );
+            dispatch(chatActions.setChatList({ list: response.chatList }));
+          });
+        }
       });
     }
   }, [receiverId.workerid, userId, role]);
 
-  const changeMessageHandler = (event) => {
-    setMessage(event.target.value);
-  };
+
+  //sending message
   const sendMessageHandler = async (event) => {
     event.preventDefault();
     setMessage("");
@@ -179,6 +186,8 @@ function Chats() {
       }
     );
   };
+
+  //message list ui
   if (chats[receiverId.workerid]) {
     messageList = chats[receiverId.workerid].map((message) => {
       const date = new Date(message.time);
@@ -232,6 +241,8 @@ function Chats() {
       );
     });
   }
+
+  //jsx
   return (
     <Fade in={true} timeout={1000}>
       <Box className={classes.chats}>
@@ -295,7 +306,9 @@ function Chats() {
                 label="Message"
                 autoFocus
                 value={message}
-                onChange={changeMessageHandler}
+                onChange={(event) => {
+                  setMessage(event.target.value);
+                }}
                 sx={{
                   backgroundColor: "white",
                   borderRadius: "5px",

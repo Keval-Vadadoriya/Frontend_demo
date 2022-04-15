@@ -31,7 +31,11 @@ import { snackbarActions } from "../../store/snackbar-slice";
 import { useTheme } from "@mui/styles";
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const theme = useTheme();
+
+  //states
   const [loginEmail, setLoginEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [passwordIsValid, setPasswordIsValid] = useState(false);
@@ -43,12 +47,10 @@ const LoginForm = () => {
   const [verifyDialog, setVerifyDialog] = useState(false);
   const [otp, setOtp] = useState();
 
+  //redux states
   const { status, token, errorMessage } = useSelector((state) => state.login);
   const { status: verifyStatus, errorMessage: verifyerrorMessage } =
     useSelector((state) => state.signup);
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
 
   //handling error and success
   useEffect(() => {

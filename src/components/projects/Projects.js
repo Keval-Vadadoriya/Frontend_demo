@@ -47,17 +47,28 @@ const useStyles = makeStyles((theme) => ({
 const Projects = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
+  
+  //states
   const [location, setLocation] = useState("none");
   const [profession, setProfession] = useState("none");
   const [filtered, setFiltered] = useState(false);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("none");
   const [filter, setFilter] = useState(false);
-
-  const dispatch = useDispatch();
+  
+  //redux states
   const { projects, count } = useSelector((state) => state.project);
+  
+  let projectList;
 
+  //getting all projects
+  useEffect(() => {
+    dispatch(getAllProjects({ search: "null", skip: 0 }));
+  }, []);
+
+  //sorting data
   const changeSortHandler = (event) => {
     dispatch(
       filterProjects({
@@ -70,6 +81,7 @@ const Projects = () => {
     setSort(event.target.value);
   };
 
+  //pages
   const handleChange = (_, value) => {
     setPage(value);
     if (filtered) {
@@ -93,6 +105,7 @@ const Projects = () => {
     setProfession(event.target.value);
   };
 
+  //clearing filter
   const clearFilter = () => {
     setLocation("none");
     setProfession("none");
@@ -108,6 +121,8 @@ const Projects = () => {
     );
     setFiltered(false);
   };
+
+  //filter projects
   const filterProjectsBy = (event) => {
     event.preventDefault();
     setFiltered(true);
@@ -115,17 +130,8 @@ const Projects = () => {
     dispatch(filterProjects({ location, profession, sort, skip: 0 }));
   };
 
-  useEffect(() => {
-    dispatch(getAllProjects({ search: "null", skip: 0 }));
-  }, []);
-  let projectList;
-  if (projects) {
-    projectList = projects.map((project) => (
-      <ProjectCard project={project} key={project._id} />
-    ));
-  }
-
-  //search
+  
+  //search project
   const searchHandler = (event) => {
     if (event.target.value === "") {
       dispatch(getAllProjects({ search: "null", skip: 0 }));
@@ -133,6 +139,13 @@ const Projects = () => {
       dispatch(getAllProjects({ search: event.target.value, skip: 0 }));
     }
   };
+  
+  //projectlist ui
+  if (projects) {
+    projectList = projects.map((project) => (
+      <ProjectCard project={project} key={project._id} />
+    ));
+  }
 
   return (
     <Fragment>

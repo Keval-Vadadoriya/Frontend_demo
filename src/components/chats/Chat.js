@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar": {
       display: "none",
     },
-    // maxWidth: 360,
     overflow: "scroll",
     padding: 10,
   },
@@ -49,14 +48,18 @@ const useStyles = makeStyles((theme) => ({
 const Chat = () => {
   const theme = useTheme();
   const classes = useStyles(theme);
+  const dispatch = useDispatch();
+
+  //redux states
   const userId = useSelector((state) => state.user.user._id);
   const user = useSelector((state) => state.user.user);
   const role = useSelector((state) => state.login.role);
   const { chatList } = useSelector((state) => state.chat);
   const socket = useSelector((state) => state.socket.socket);
-  const dispatch = useDispatch();
   const page = useSelector((state) => state.snackbar.page);
 
+
+  //getting chatlist
   useEffect(() => {
     socket.removeAllListeners("chatlist");
     socket.on("chatlist", (list, chats) => {
@@ -78,6 +81,7 @@ const Chat = () => {
     }
   }, [userId, role]);
 
+  //chatlist ui
   let chatListUi;
   if (chatList.length !== 0) {
     chatListUi = chatList.map((worker) => {

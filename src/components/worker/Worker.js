@@ -43,6 +43,9 @@ const Worker = () => {
   const theme = useTheme();
   const classes = useStyles();
   const matches = useMediaQuery("(max-width:600px)");
+  const dispatch = useDispatch();
+
+  //states
   const [location, setLocation] = useState("none");
   const [profession, setProfession] = useState("none");
   const [review, setReview] = useState("none");
@@ -52,11 +55,19 @@ const Worker = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const dispatch = useDispatch();
+  //redux states
   const { status, workers, count, errorMessage } = useSelector(
     (state) => state.workerslist
-  );
+    );
+    
+    let workerList;
+    
+ //get all workers
+ useEffect(() => {
+  dispatch(getAllWorkers({ search: "null", skip: 0 }));
+}, []);
 
+  //handling error
   useEffect(() => {
     if (errorMessage === "No Workers Found") {
       dispatch(
@@ -70,6 +81,8 @@ const Worker = () => {
     }
   }, [errorMessage]);
 
+
+  //pages
   const handleChange = (event, value) => {
     setPage(value);
     if (filtered) {
@@ -86,6 +99,8 @@ const Worker = () => {
       dispatch(getAllWorkers({ search: "null", skip: (value - 1) * 10 }));
     }
   };
+
+  //
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };
@@ -98,6 +113,8 @@ const Worker = () => {
   const changeAvailabilityHandler = (event) => {
     setAvailability(event.target.value);
   };
+
+  //clearing filter
   const clearFilter = () => {
     setLocation("none");
     setReview("none");
@@ -107,6 +124,8 @@ const Worker = () => {
     setFiltered(false);
     dispatch(getAllWorkers({ search: "null", skip: 0 }));
   };
+
+  //filter workers
   const filterWorkersBy = async (event) => {
     event.preventDefault();
     setFiltered(true);
@@ -116,9 +135,8 @@ const Worker = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(getAllWorkers({ search: "null", skip: 0 }));
-  }, []);
+
+ 
 
   //search
   const searchHandler = (event) => {
@@ -129,7 +147,6 @@ const Worker = () => {
     }
   };
 
-  let workerList;
   if (workers) {
     workerList = workers.map((worker) => (
       <Box
