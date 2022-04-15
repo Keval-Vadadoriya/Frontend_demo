@@ -41,12 +41,15 @@ function WorkerProfile() {
   const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const workerid = useParams();
+
+  //redux states
+  const token = useSelector((state) => state.login.token);
   const { status, worker, errorMessage } = useSelector(
     (state) => state.workerslist
   );
-  const token = useSelector((state) => state.login.token);
 
-  const workerid = useParams();
+  //get worker
   useEffect(async () => {
     dispatch(getWorker({ token, workerId: workerid.workerid }));
   }, []);

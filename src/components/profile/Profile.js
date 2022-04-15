@@ -35,8 +35,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Profile = () => {
   const theme = useTheme();
-  const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
+
+  //states
   const [review, setReview] = useState(false);
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState("");
@@ -54,13 +56,17 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState("");
   const [changePassword, setChangePassword] = useState(false);
+
+
+  //redux states
   const { status, errorMessage } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const role = useSelector((state) => state.login.role);
   const userId = useSelector((state) => state.user.user._id);
   const avatar = user.avatar;
 
-  const dispatch = useDispatch();
 
+  //setting values
   useEffect(() => {
     if (Object.keys(user) !== 0) {
       setName(user.name);
@@ -73,6 +79,8 @@ const Profile = () => {
       setAvailability(user.availability);
     }
   }, [user]);
+
+  //handling success
   useEffect(() => {
     if (status === "Saved Changes Successfully") {
       dispatch(
@@ -86,6 +94,7 @@ const Profile = () => {
     }
   }, [status]);
 
+  //handling error
   useEffect(() => {
     if (errorMessage) {
       dispatch(
@@ -111,10 +120,9 @@ const Profile = () => {
     setEdit(false);
   };
 
-  //Submit Handler
+  //editing profile
   const SubmitHandler = (event) => {
     event.preventDefault();
-    // setChangePassword(false);
     const formData = new FormData();
     if (newAvatar) {
       formData.append("avatar", newAvatar);

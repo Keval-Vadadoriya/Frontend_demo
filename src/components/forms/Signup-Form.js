@@ -40,7 +40,12 @@ const useStyles = makeStyles((theme) => ({
 const SignupForm = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const matches = useMediaQuery("(max-width:600px)");
+
+  //states
   const [touched, setTouched] = useState(false);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -48,21 +53,22 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(false);
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordIsValid, setConfirmPasswordIsValid] = useState(false);
   const [profession, setProfession] = useState("");
   const [professionIsValid, setProfessionIsValid] = useState(false);
   const [location, setLocation] = useState("");
   const [locationIsValid, setLocationIsValid] = useState(false);
-  const role = useSelector((state) => state.login.role);
   const [roleIsValid, setRoleIsValid] = useState(role !== "");
-  const token = useSelector((state) => state.login.token);
   const [otp, setOtp] = useState();
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
+  
+  //redux states
+  const token = useSelector((state) => state.login.token);
+  const role = useSelector((state) => state.login.role);
   const { status, errorMessage } = useSelector((state) => state.signup);
+
+  
   if (token) {
     navigate("/");
   }
@@ -200,7 +206,6 @@ const SignupForm = () => {
       <Fade in={true} timeout={500}>
         <Box
           sx={{
-            // height: "92.5vh",
             width: "100vw",
             backgroundImage:
               "url(https://wallpaperaccess.com/full/2581470.jpg)",
@@ -273,12 +278,6 @@ const SignupForm = () => {
                     fullWidth
                     id="Name"
                     label="Name"
-                    // FormHelperTextProps={{
-                    //   classes: {
-                    //     root: classes.helperText,
-                    //   },
-                    //   // classes={{classes.helperText}}
-                    // }}
                     onChange={changeNameHandler}
                     sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                   />

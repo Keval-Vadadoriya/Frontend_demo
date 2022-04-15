@@ -30,18 +30,23 @@ const Review = (props) => {
   const theme = useTheme();
   const classes = useStyles();
   const dispatch = useDispatch();
+  const workerid = useParams();
+
+  //states
   const [description, setDescription] = useState("");
   const [review, setReview] = useState(0);
   const [initialRating, setInitialRating] = useState(0);
+  
+  //redux states
+  const role = useSelector((state) => state.login.role);
   const { status, reviews, errorMessage } = useSelector(
     (state) => state.reviews
-  );
-  const role = useSelector((state) => state.login.role);
+    );
+    
+    let reviewList;
 
-  const workerid = useParams();
-
+  //getting reviews
   useEffect(() => {
-    console.log("here");
     if (role === "user") {
       dispatch(getReviews({ workerId: workerid.id }));
     }
@@ -49,6 +54,8 @@ const Review = (props) => {
       dispatch(getReviews({ workerId: props.workerId }));
     }
   }, [role]);
+
+  //handling success and error
   useEffect(() => {
     if (status === "Review Added Successfully") {
       dispatch(
@@ -71,6 +78,8 @@ const Review = (props) => {
       dispatch(reviewActions.setErrorMessage({ errorMessage: "" }));
     }
   }, [status, errorMessage]);
+
+  //
   const changeDescriptionHandler = (event) => {
     setDescription(event.target.value);
   };
@@ -78,6 +87,8 @@ const Review = (props) => {
     setInitialRating(value);
     setReview(value);
   };
+
+  //adding review
   const addReviewHandler = async (event) => {
     event.preventDefault();
     setInitialRating(0);
@@ -93,7 +104,7 @@ const Review = (props) => {
     }
   };
 
-  let reviewList;
+  //reviews ui
   if (reviews) {
     reviewList = reviews.map((review) => {
       return (

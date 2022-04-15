@@ -34,7 +34,10 @@ import { useTheme } from "@mui/styles";
 
 const MyProjects = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
+
+  //states
   const [location, setLocation] = useState("none");
   const [profession, setProfession] = useState("none");
   const [amount, setAmount] = useState(0);
@@ -43,10 +46,13 @@ const MyProjects = () => {
   const [addProject, setAddProject] = useState(false);
   const [page, setPage] = useState(1);
 
-  const dispatch = useDispatch();
+  let projectList;
+
+  //redux states
   const { projects, count } = useSelector((state) => state.project);
   const { status, errorMessage } = useSelector((state) => state.myproject);
 
+  //handling error and success
   useEffect(() => {
     if (status === "Project Posted Successfully") {
       setAddProject(false);
@@ -76,16 +82,9 @@ const MyProjects = () => {
     }
   }, [status, errorMessage]);
 
-  const addProjectHandler = () => {
-    setAddProject(true);
-  };
-  const handleClose = () => {
-    setAddProject(false);
-  };
-  const handleChange = (event, value) => {
-    setPage(value);
-    dispatch(getMyProjects({ skip: (value - 1) * 10 }));
-  };
+ 
+
+  //posting project
   const SubmitHandler = (event) => {
     event.preventDefault();
 
@@ -99,6 +98,27 @@ const MyProjects = () => {
       })
     );
   };
+
+    //removing project
+    const removeProjectHandler = (projectId) => {
+      if (window.confirm("Are You Sure You Want to Remove Project?")) {
+        dispatch(removeProject({ projectId }));
+        dispatch(getMyProjects({ skip: 0 }));
+      }
+    };
+
+
+    const addProjectHandler = () => {
+      setAddProject(true);
+    };
+    const handleClose = () => {
+      setAddProject(false);
+    };
+    const handleChange = (event, value) => {
+      setPage(value);
+      dispatch(getMyProjects({ skip: (value - 1) * 10 }));
+    };
+    
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };
@@ -114,17 +134,15 @@ const MyProjects = () => {
   const changeDescriptionHandler = (event) => {
     setDescription(event.target.value);
   };
-  const removeProjectHandler = (projectId) => {
-    if (window.confirm("Are You Sure You Want to Remove Project?")) {
-      dispatch(removeProject({ projectId }));
-      dispatch(getMyProjects({ skip: 0 }));
-    }
-  };
 
+
+
+  //getting projectlist
   useEffect(async () => {
     dispatch(getMyProjects({ skip: 0 }));
   }, []);
-  let projectList;
+
+  //projectlist ui
   if (projects) {
     projectList = projects.map((project) => (
       <ProjectCard
@@ -143,8 +161,6 @@ const MyProjects = () => {
             sx={{
               height: "92.5vh",
               backgroundColor: theme.palette.primary.main,
-              // display: "flex",
-              // flexDirection: "column",
               overflow: "scroll",
               "&::-webkit-scrollbar": {
                 display: "none",

@@ -36,16 +36,8 @@ import { userActions } from "../../store/user-slice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // background: theme.palette.third.extra,
-    // border: "3px dashed black",
     fontSize: "30px",
     fontWeight: 900,
-    // textAlign: "center",
-    // borderTopLeftRadius: "25px",
-    // borderBottomRightRadius: "25px",
-    // color: "black",
-    // height: 48,
-    // padding: "0 30px",
   },
   link: {
     margin: "5px",
@@ -80,13 +72,17 @@ const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const classes = useStyles(theme);
+
+  //redux states
   const token = useSelector((state) => state.login.token);
   const role = useSelector((state) => state.login.role);
   const user = useSelector((state) => state.user.user);
+
+  //states
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const classes = useStyles(theme);
   const loginHandler = () => {
     navigate("/login", { replace: true });
   };

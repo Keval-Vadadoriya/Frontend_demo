@@ -8,6 +8,8 @@ const Home = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //redux states
   const socket = useSelector((state) => state.socket.socket);
   const userId = useSelector((state) => state.user.user._id);
   const role = useSelector((state) => state.login.role);
@@ -24,23 +26,7 @@ const Home = () => {
       }
     }
   }, [location]);
-  useEffect(() => {
-    // if (role === "user") {
-    //   navigate("/workers");
-    // }
-    // if (role === "worker") {
-    //   navigate("/projects");
-    // }
-    return () => {
-      localStorage.clear();
-      socket.disconnect(userId);
-      dispatch(
-        loginActions.setToken({
-          token: "",
-        })
-      );
-    };
-  }, []);
+
 
   return (
     <>
