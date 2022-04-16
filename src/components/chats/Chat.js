@@ -52,12 +52,11 @@ const Chat = () => {
 
   //redux states
   const userId = useSelector((state) => state.user.user._id);
-  const user = useSelector((state) => state.user.user);
+  const userName = useSelector((state) => state.user.user.name);
   const role = useSelector((state) => state.login.role);
   const { chatList } = useSelector((state) => state.chat);
   const socket = useSelector((state) => state.socket.socket);
   const page = useSelector((state) => state.snackbar.page);
-
 
   //getting chatlist
   useEffect(() => {
@@ -147,7 +146,7 @@ const Chat = () => {
               }}
             >
               <Box className={classes.chat}>
-                <Box className={classes.userName}>{user.name}</Box>
+                <Box className={classes.userName}>{userName}</Box>
                 <List dense className={classes.chatList}>
                   {chatListUi && chatListUi}
                 </List>

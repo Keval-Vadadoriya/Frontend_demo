@@ -45,6 +45,11 @@ const SignupForm = () => {
   const navigate = useNavigate();
   const matches = useMediaQuery("(max-width:600px)");
 
+  //redux states
+  const token = useSelector((state) => state.login.token);
+  const role = useSelector((state) => state.login.role);
+  const { status, errorMessage } = useSelector((state) => state.signup);
+
   //states
   const [touched, setTouched] = useState(false);
   const [open, setOpen] = useState(false);
@@ -62,13 +67,7 @@ const SignupForm = () => {
   const [locationIsValid, setLocationIsValid] = useState(false);
   const [roleIsValid, setRoleIsValid] = useState(role !== "");
   const [otp, setOtp] = useState();
-  
-  //redux states
-  const token = useSelector((state) => state.login.token);
-  const role = useSelector((state) => state.login.role);
-  const { status, errorMessage } = useSelector((state) => state.signup);
 
-  
   if (token) {
     navigate("/");
   }
