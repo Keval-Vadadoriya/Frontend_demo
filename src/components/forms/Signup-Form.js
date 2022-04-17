@@ -105,12 +105,12 @@ const SignupForm = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const verify = () => {
+  const verifyUserHandler = () => {
     dispatch(verifyUser({ otp }));
   };
-  const changeOtpHandler = (event) => {
-    setOtp(event.target.value);
-  };
+  // const changeOtpHandler = (event) => {
+  //   setOtp(event.target.value);
+  // };
   //changing Role
   const changeRole = (event) => {
     setRoleIsValid(true);
@@ -172,6 +172,7 @@ const SignupForm = () => {
       setConfirmPasswordIsValid(true);
     }
   };
+  
   const changeConfirmPasswordHandler = (event) => {
     setConfirmPassword(event.target.value);
     if (password === event.target.value) {
@@ -206,6 +207,7 @@ const SignupForm = () => {
         <Box
           sx={{
             width: "100vw",
+            height:"92.5vh",  
             backgroundImage:
               "url(https://wallpaperaccess.com/full/2581470.jpg)",
             backgroundRepeat: "no-repeat",
@@ -215,14 +217,15 @@ const SignupForm = () => {
           <Box
             sx={{
               backdropFilter: "blur(5px)",
+              boxSizing:'border-box',
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               height: "92.5vh",
               width: "100vw",
-              overflowY: "scroll",
-              overflowX: "hidden",
+              overflowY:'scroll',
+              paddingBottom:'20px'
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -278,7 +281,6 @@ const SignupForm = () => {
                     id="Name"
                     label="Name"
                     onChange={changeNameHandler}
-                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                   />
                 </Grid>
 
@@ -295,7 +297,6 @@ const SignupForm = () => {
                     name="email"
                     autoComplete="email"
                     onChange={changeEmailHandler}
-                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -314,7 +315,6 @@ const SignupForm = () => {
                     id="password"
                     autoComplete="new-password"
                     onChange={changePasswordHandler}
-                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -335,7 +335,6 @@ const SignupForm = () => {
                     id="confirm password"
                     autoComplete="new-password"
                     onChange={changeConfirmPasswordHandler}
-                    sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                   />
                 </Grid>
                 {role === "worker" && (
@@ -354,7 +353,6 @@ const SignupForm = () => {
                         label="Profession"
                         color="success"
                         required
-                        sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                         onChange={changeProfessionHandler}
                       >
                         <MenuItem value={"none"} disabled hidden>
@@ -386,7 +384,6 @@ const SignupForm = () => {
                         required
                         label="Location"
                         onChange={changeLocationHandler}
-                        sx={{ backgroundColor: "rgba(256,256,256,0)" }}
                       >
                         <MenuItem value={"none"} disabled hidden>
                           {"Select Location"}
@@ -450,12 +447,14 @@ const SignupForm = () => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={changeOtpHandler}
+            onChange={(event) => {
+              setOtp(event.target.value);
+            }}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={verify}>Submit</Button>
+          <Button onClick={verifyUserHandler}>Submit</Button>
         </DialogActions>
       </Dialog>
     </>

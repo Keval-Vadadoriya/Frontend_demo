@@ -118,7 +118,9 @@ const MyProjects = () => {
       setPage(value);
       dispatch(getMyProjects({ skip: (value - 1) * 10 }));
     };
-    
+
+
+  //change handlers  
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };
@@ -138,7 +140,7 @@ const MyProjects = () => {
 
 
   //getting projectlist
-  useEffect(async () => {
+  useEffect( () => {
     dispatch(getMyProjects({ skip: 0 }));
   }, []);
 

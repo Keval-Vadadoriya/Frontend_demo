@@ -19,8 +19,6 @@ import {
   TextField,
   DialogActions,
   Button,
-  Container,
-  CssBaseline,
   Box,
   Avatar,
   Typography,
@@ -52,7 +50,19 @@ const LoginForm = () => {
   const { status: verifyStatus, errorMessage: verifyerrorMessage } =
     useSelector((state) => state.signup);
 
-  //handling error and success
+
+      //navigete
+  useEffect(() => {
+    if (
+      token &&
+      (status === "Login Successful" ||
+        verifyStatus === "Verification Successful")
+    ) {
+      navigate("/");
+    }
+  }, [token, status, verifyStatus]);
+
+  //handling error, success and dialog
   useEffect(() => {
     if (errorMessage === "Plese Verify Your Email") {
       setOpen(true);
@@ -69,6 +79,16 @@ const LoginForm = () => {
         })
       );
       dispatch(loginActions.setErrorMessage({ errorMessage: "" }));
+    }
+    if (verifyerrorMessage) {
+      dispatch(
+        snackbarActions.setSnackbar({
+          open: true,
+          severity: "error",
+          message: verifyerrorMessage,
+        })
+      );
+      dispatch(signupActions.setErrorMessage({ errorMessage: "" }));
     }
     if (
       status === "Login Successful" ||
@@ -98,7 +118,7 @@ const LoginForm = () => {
       setForgotDialog(false);
       setVerifyDialog(true);
     }
-  }, [status, verifyStatus, errorMessage]);
+  }, [status, verifyStatus, errorMessage,verifyerrorMessage]);
 
   //dialogs
   const handleVerifyUserClose = () => {
@@ -107,26 +127,18 @@ const LoginForm = () => {
   const handleVerifyPasswordClose = () => {
     setVerifyDialog(false);
   };
-  const verify = () => {
+  const verifyUserHandler = () => {
     dispatch(verifyUser({ otp }));
   };
   const changeOtpHandler = (event) => {
     setOtp(event.target.value);
   };
 
-  const forgotPasswordHandler = () => {
-    setForgotDialog(true);
-  };
   const handleForgotClose = () => {
     setForgotDialog(false);
   };
-  const changeForgotPasswordHandler = (event) => {
-    setPassword(event.target.value);
-  };
-  const changeConfirmPasswordHandler = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-  const verifyPasswordx = () => {
+
+  const verifyPasswordHandler = () => {
     if (password === confirmPassword) {
       const body = {
         password,
@@ -134,22 +146,13 @@ const LoginForm = () => {
       dispatch(verifyPassword({ otp, body }));
     }
   };
-  const forgotPasswordx = () => {
+  const forgotPasswordHandler = () => {
     const body = {
       email: loginEmail,
     };
     dispatch(forgotPassword({ body }));
   };
-  //Login Request
-  useEffect(() => {
-    if (
-      token &&
-      (status === "Login Successful" ||
-        verifyStatus === "Verification Successful")
-    ) {
-      navigate("/");
-    }
-  }, [token, status, verifyStatus]);
+
 
   //Submit Handler
   const onSubmitHandler = (event) => {
@@ -277,7 +280,9 @@ const LoginForm = () => {
                 <Grid item>
                   <Typography
                     variant="body2"
-                    onClick={forgotPasswordHandler}
+                    onClick={() => {
+                      setForgotDialog(true);
+                    }}
                     color="blue"
                     sx={{
                       "&:hover": {
@@ -330,7 +335,7 @@ const LoginForm = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleVerifyUserClose}>Cancel</Button>
-          <Button onClick={verify}>Submit</Button>
+          <Button onClick={verifyUserHandler}>Submit</Button>
         </DialogActions>
       </Dialog>
 
@@ -372,7 +377,9 @@ const LoginForm = () => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={changeForgotPasswordHandler}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
           />
           <TextField
             required
@@ -382,12 +389,14 @@ const LoginForm = () => {
             type="text"
             fullWidth
             variant="standard"
-            onChange={changeConfirmPasswordHandler}
+            onChange={(event) => {
+              setConfirmPassword(event.target.value);
+            }}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleVerifyPasswordClose}>Cancel</Button>
-          <Button onClick={verifyPasswordx}>verify</Button>
+          <Button onClick={verifyPasswordHandler}>verify</Button>
         </DialogActions>
       </Dialog>
 
@@ -423,7 +432,7 @@ const LoginForm = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleForgotClose}>Cancel</Button>
-          <Button onClick={forgotPasswordx}>forgot</Button>
+          <Button onClick={forgotPasswordHandler}>forgot</Button>
         </DialogActions>
       </Dialog>
     </>

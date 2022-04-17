@@ -24,7 +24,7 @@ export const chatSlice = createSlice({
     },
     setStatus(state, action) {
       const index = state.chats[action.payload.receiverId].findIndex(
-        (chat) => chat._id === action.payload._id
+        (chat) => chat._id === action.payload.messageId
       );
       state.chats[action.payload.receiverId][index].status =
         action.payload.status;

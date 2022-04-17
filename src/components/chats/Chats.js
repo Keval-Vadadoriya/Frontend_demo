@@ -10,7 +10,6 @@ import {
   Box,
   Typography,
   Avatar,
-  Container,
   FormControl,
   Fade,
 } from "@mui/material";
@@ -70,7 +69,7 @@ function Chats() {
   const theme = useTheme();
   const navigate = useNavigate();
   const classes = useStyles(theme);
-  const receiverId = useParams();
+  const { receiverId } = useParams();
   const messagesEndRef = useRef();
   const dispatch = useDispatch();
   const [message, setMessage] = useState("");
@@ -90,18 +89,18 @@ function Chats() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [chats[receiverId.workerid]]);
+  }, [chats[receiverId]]);
 
   //emmiting delivered status
   useEffect(() => {
     if (data) {
       socket.emit(
-        "delivered",
-        data.message._id,
-        data.sender,
-        data.receiver,
-        data.role,
-        receiverId.workerid === data.sender ? true : false,
+        "delivered",{
+        messageId:data.message._id,
+        sender:data.sender,
+        receiver:data.receiver,
+        role:data.role,
+        active:receiverId === data.sender ? true : false},
         (response) => {
           dispatch(chatActions.setChatList({ list: response.chatList }));
         }
@@ -110,7 +109,7 @@ function Chats() {
   }, [data]);
 
   //getting messages and delivered status
-  useEffect(async () => {
+  useEffect( () => {
     socket.removeAllListeners();
 
     socket.on("message", (data) => {
@@ -122,12 +121,12 @@ function Chats() {
         })
       );
     });
-    socket.on("messageDelivered", (_id) => {
+    socket.on("messageDelivered", (messageId) => {
       dispatch(
         chatActions.setStatus({
           status: "delivered",
-          _id,
-          receiverId: receiverId.workerid,
+          messageId,
+          receiverId,
         })
       );
     });
@@ -137,14 +136,14 @@ function Chats() {
   //adding to chatlist and getting chats
   useEffect(() => {
     if (userId && role) {
-      socket.emit("addToChatList", userId, role, receiverId.workerid,(response)=>{
-        if(response.status=='success'){
-          socket.emit("getchats", userId, role, receiverId.workerid, (response) => {
+      socket.emit("addToChatList", {senderId:userId, role, receiverId},(response)=>{
+        if(response.status==='success'){
+      socket.emit("getchats", {userId, role, receiverId}, (response) => {
             dispatch(
               chatActions.setChats({
                 chats: response.chats,
                 role,
-                receiverId: receiverId.workerid,
+                receiverId,
               })
             );
             dispatch(chatActions.setChatList({ list: response.chatList }));
@@ -152,11 +151,11 @@ function Chats() {
         }
       });
     }
-  }, [receiverId.workerid, userId, role]);
+  }, [receiverId, userId, role]);
 
 
   //sending message
-  const sendMessageHandler = async (event) => {
+  const sendMessageHandler =  (event) => {
     event.preventDefault();
     setMessage("");
     let createMessage = {
@@ -172,14 +171,14 @@ function Chats() {
       {
         message: createMessage,
         sender: userId,
-        receiver: receiverId.workerid,
+        receiver: receiverId,
         role,
       },
       (response) => {
         dispatch(
           chatActions.setChat({
             message: response.message,
-            receiverId: receiverId.workerid,
+            receiverId,
           })
         );
         dispatch(chatActions.setChatList({ list: response.chatlist }));
@@ -188,8 +187,8 @@ function Chats() {
   };
 
   //message list ui
-  if (chats[receiverId.workerid]) {
-    messageList = chats[receiverId.workerid].map((message) => {
+  if (chats[receiverId]) {
+    messageList = chats[receiverId].map((message) => {
       const date = new Date(message.time);
       return (
         <Box
@@ -258,7 +257,7 @@ function Chats() {
             </Button>
             <Box
               component={Link}
-              to={role === "user" ? `/workers/${receiverId.workerid}` : ""}
+              to={role === "user" ? `/workers/${receiverId}` : ""}
               sx={{ display: "flex", textDecoration: "none" }}
             >
               <Avatar

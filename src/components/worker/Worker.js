@@ -44,6 +44,8 @@ const Worker = () => {
   const classes = useStyles();
   const matches = useMediaQuery("(max-width:600px)");
   const dispatch = useDispatch();
+  
+  let workerList;
 
   //states
   const [location, setLocation] = useState("none");
@@ -60,7 +62,6 @@ const Worker = () => {
     (state) => state.workerslist
     );
     
-    let workerList;
     
  //get all workers
  useEffect(() => {
@@ -100,7 +101,7 @@ const Worker = () => {
     }
   };
 
-  //
+  //chnge handlers
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };
@@ -126,7 +127,7 @@ const Worker = () => {
   };
 
   //filter workers
-  const filterWorkersBy = async (event) => {
+  const filterWorkersBy =  (event) => {
     event.preventDefault();
     setFiltered(true);
     setFilter(false);
@@ -147,6 +148,8 @@ const Worker = () => {
     }
   };
 
+
+  //workers list ui
   if (workers) {
     workerList = workers.map((worker) => (
       <Box

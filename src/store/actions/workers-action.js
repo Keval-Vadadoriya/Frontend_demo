@@ -71,7 +71,6 @@ export const workersSlice = createSlice({
       state.errorMessage = "";
 
       state.workers = action.payload.workers;
-      console.log(action.payload.count);
       if (action.payload.count !== 0 && !isNaN(action.payload.count)) {
         state.count = action.payload.count;
       }
