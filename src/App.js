@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 
+//Components
 import SignupForm from "./components/forms/Signup-Form";
 import LoginForm from "./components/forms/Login-Form";
 import Header from "./components/layout/Header";
@@ -16,23 +17,32 @@ import WorkerProfile from "./components/worker/WorkerProfile";
 import Welcome from "./components/welcome/Welcome";
 import Unauthorized from "./components/welcome/Unauthorized";
 import NotFound from "./components/welcome/NotFound";
+
+//mui
 import { Box, Snackbar, Alert, Slide } from "@mui/material";
-import { snackbarActions } from "./store/snackbar-slice";
 import { useTheme } from "@mui/styles";
 
+//Actions
+import { snackbarActions } from "./store/snackbar-slice";
+
 function App() {
-  const theme = useTheme();
+  const dispatch = useDispatch();
+
+  //redux states
   const { open, severity, message } = useSelector((state) => state.snackbar);
   const token = useSelector((state) => state.login.token);
   const role = useSelector((state) => state.login.role);
-  const dispatch = useDispatch();
+
+
+
+  //snackbaractions
   const handleSnackbar = () => {
     dispatch(snackbarActions.setSnackbar({ open: false }));
   };
 
   return (
     <>
-      <Box sx={{ minWidth: "xs" }}>
+      <Box >
         <Header />
         <Routes>
           {!token && <Route path="/" element={<Welcome />} />}
@@ -43,7 +53,7 @@ function App() {
             <Route path="/" element={<Home />}>
               <Route path="profile" element={<Profile />} />
               <Route path="chats" element={<Chat />}>
-                <Route path=":workerid" element={<Chats />} />
+                <Route path=":receiverId" element={<Chats />} />
               </Route>
 
               <Route path="workers">

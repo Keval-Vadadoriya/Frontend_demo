@@ -140,10 +140,10 @@ const Profile = () => {
       formData.append("age", age);
     }
     if (role === "worker") {
-      if (profession) {
+      if (professionIsValid) {
         formData.append("profession", profession);
       }
-      if (location) {
+      if (locationIsValid) {
         formData.append("location", location);
       }
       if (description) {

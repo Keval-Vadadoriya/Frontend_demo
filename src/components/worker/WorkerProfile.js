@@ -50,7 +50,7 @@ function WorkerProfile() {
   );
 
   //get worker
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getWorker({ token, workerId: workerid.workerid }));
   }, []);
 

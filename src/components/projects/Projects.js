@@ -97,6 +97,8 @@ const Projects = () => {
       dispatch(getAllProjects({ search: "null", skip: (value - 1) * 10 }));
     }
   };
+
+  //change handlers42
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };

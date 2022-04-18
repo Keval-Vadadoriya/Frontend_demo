@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+
+import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { createTheme } from "@mui/material";
@@ -10,7 +11,6 @@ import { ThemeProvider } from "@mui/styles";
 
 const theme = createTheme({
   palette: {
-    type: "light",
     primary: {
       main: "#5c6364",
       extra: "#3a5157",

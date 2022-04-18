@@ -89,7 +89,7 @@ const Review = (props) => {
   };
 
   //adding review
-  const addReviewHandler = async (event) => {
+  const addReviewHandler = (event) => {
     event.preventDefault();
     setInitialRating(0);
     setDescription("");

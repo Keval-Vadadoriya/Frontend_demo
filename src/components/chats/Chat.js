@@ -76,7 +76,7 @@ const Chat = () => {
   }, []);
   useEffect(() => {
     if (userId && role) {
-      socket.emit("getchatlist", userId, role);
+      socket.emit("getchatlist", {userId, role});
     }
   }, [userId, role]);
 

@@ -1,12 +1,10 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { loginActions } from "../../store/login-slice";
 import { Box } from "@mui/system";
 
 const Home = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //redux states
