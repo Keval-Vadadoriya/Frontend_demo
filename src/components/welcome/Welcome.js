@@ -16,12 +16,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     backgroundImage: "url(https://wallpaperaccess.com/full/2581470.jpg)",
-    // backgroundImage:
-    //   "url(https://www.fulltimenomad.com/wp-content/uploads/2017/03/What-is-Upwork.jpg)",
     backgroundRepeat: "no-repeat",
-    // objectFit: "cover",
     backgroundSize: "100% 100%",
-    // backgroundSize: "cover",
   },
   welcome: {
     textAlign: "center",
