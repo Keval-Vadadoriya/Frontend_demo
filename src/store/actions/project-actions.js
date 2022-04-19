@@ -11,7 +11,7 @@ export const getAllProjects = createAsyncThunk(
   async ({ search, skip }, getState) => {
     try {
       const response = await baseService.get(
-        `/getallprojects/${search}?limit=10&&skip=${skip}`
+        `/getallprojects?search=${search}&&limit=10&&skip=${skip}`
       );
 
       return response.data;

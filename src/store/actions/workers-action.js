@@ -12,7 +12,7 @@ export const getAllWorkers = createAsyncThunk(
   async ({ search, skip }, getState) => {
     try {
       const response = await baseService.get(
-        `/getallworkers/${search}?limit=10&&skip=${skip}`
+        `/getallworkers?search=${search}&&limit=10&&skip=${skip}`
       );
 
       return response.data;
