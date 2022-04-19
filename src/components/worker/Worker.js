@@ -44,7 +44,7 @@ const Worker = () => {
   const classes = useStyles();
   const matches = useMediaQuery("(max-width:600px)");
   const dispatch = useDispatch();
-  
+
   let workerList;
 
   //states
@@ -55,18 +55,16 @@ const Worker = () => {
   const [filtered, setFiltered] = useState(false);
   const [filter, setFilter] = useState(false);
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
 
   //redux states
-  const { status, workers, count, errorMessage } = useSelector(
+  const { workers, count, errorMessage } = useSelector(
     (state) => state.workerslist
-    );
-    
-    
- //get all workers
- useEffect(() => {
-  dispatch(getAllWorkers({ search: "null", skip: 0 }));
-}, []);
+  );
+
+  //get all workers
+  useEffect(() => {
+    dispatch(getAllWorkers({ search: "null", skip: 0 }));
+  }, [dispatch]);
 
   //handling error
   useEffect(() => {
@@ -80,8 +78,7 @@ const Worker = () => {
       );
       dispatch(workersActions.setErrorMessage({ errorMessage: "" }));
     }
-  }, [errorMessage]);
-
+  }, [errorMessage, dispatch]);
 
   //pages
   const handleChange = (event, value) => {
@@ -127,7 +124,7 @@ const Worker = () => {
   };
 
   //filter workers
-  const filterWorkersBy =  (event) => {
+  const filterWorkersBy = (event) => {
     event.preventDefault();
     setFiltered(true);
     setFilter(false);
@@ -135,9 +132,6 @@ const Worker = () => {
       filterWorkers({ location, profession, review, availability, skip: 0 })
     );
   };
-
-
- 
 
   //search
   const searchHandler = (event) => {
@@ -147,7 +141,6 @@ const Worker = () => {
       dispatch(getAllWorkers({ search: event.target.value, skip: 0 }));
     }
   };
-
 
   //workers list ui
   if (workers) {

@@ -100,7 +100,7 @@ const SignupForm = () => {
       );
       dispatch(signupActions.setStatus({ status: "idle" }));
     }
-  }, [status, errorMessage]);
+  }, [status, errorMessage, dispatch]);
 
   const handleClose = () => {
     setOpen(false);
@@ -108,9 +108,7 @@ const SignupForm = () => {
   const verifyUserHandler = () => {
     dispatch(verifyUser({ otp }));
   };
-  // const changeOtpHandler = (event) => {
-  //   setOtp(event.target.value);
-  // };
+
   //changing Role
   const changeRole = (event) => {
     setRoleIsValid(true);
@@ -172,7 +170,7 @@ const SignupForm = () => {
       setConfirmPasswordIsValid(true);
     }
   };
-  
+
   const changeConfirmPasswordHandler = (event) => {
     setConfirmPassword(event.target.value);
     if (password === event.target.value) {
@@ -207,7 +205,7 @@ const SignupForm = () => {
         <Box
           sx={{
             width: "100vw",
-            height:"92.5vh",  
+            height: "92.5vh",
             backgroundImage:
               "url(https://wallpaperaccess.com/full/2581470.jpg)",
             backgroundRepeat: "no-repeat",
@@ -217,15 +215,15 @@ const SignupForm = () => {
           <Box
             sx={{
               backdropFilter: "blur(5px)",
-              boxSizing:'border-box',
+              boxSizing: "border-box",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "flex-start",
               height: "92.5vh",
               width: "100vw",
-              overflowY:'scroll',
-              paddingBottom:'20px'
+              overflowY: "scroll",
+              paddingBottom: "20px",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

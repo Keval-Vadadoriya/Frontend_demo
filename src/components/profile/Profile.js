@@ -57,14 +57,12 @@ const Profile = () => {
   const [passwordIsValid, setPasswordIsValid] = useState("");
   const [changePassword, setChangePassword] = useState(false);
 
-
   //redux states
   const { status, errorMessage } = useSelector((state) => state.user);
   const user = useSelector((state) => state.user.user);
   const role = useSelector((state) => state.login.role);
   const userId = useSelector((state) => state.user.user._id);
   const avatar = user.avatar;
-
 
   //setting values
   useEffect(() => {
@@ -92,7 +90,7 @@ const Profile = () => {
       );
       dispatch(userActions.setStatus({ status: "idle" }));
     }
-  }, [status]);
+  }, [status, dispatch]);
 
   //handling error
   useEffect(() => {
@@ -106,7 +104,7 @@ const Profile = () => {
       );
       dispatch(userActions.setErrorMessage({ errorMessage: "" }));
     }
-  }, [errorMessage]);
+  }, [errorMessage, dispatch]);
 
   //change password
   const updatePassword = () => {
@@ -199,10 +197,9 @@ const Profile = () => {
         >
           <Container
             sx={{
-              display: "flex",
-              justifyContent: "center",
               width: { xs: "100%", md: "70%" },
               display: "flex",
+              justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
             }}

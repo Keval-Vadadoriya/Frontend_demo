@@ -17,10 +17,10 @@ import WorkerProfile from "./components/worker/WorkerProfile";
 import Welcome from "./components/welcome/Welcome";
 import Unauthorized from "./components/welcome/Unauthorized";
 import NotFound from "./components/welcome/NotFound";
+import Loading from "./components/welcome/Loading";
 
 //mui
 import { Box, Snackbar, Alert, Slide } from "@mui/material";
-import { useTheme } from "@mui/styles";
 
 //Actions
 import { snackbarActions } from "./store/snackbar-slice";
@@ -33,8 +33,6 @@ function App() {
   const token = useSelector((state) => state.login.token);
   const role = useSelector((state) => state.login.role);
 
-
-
   //snackbaractions
   const handleSnackbar = () => {
     dispatch(snackbarActions.setSnackbar({ open: false }));
@@ -42,7 +40,7 @@ function App() {
 
   return (
     <>
-      <Box >
+      <Box>
         <Header />
         <Routes>
           {!token && <Route path="/" element={<Welcome />} />}
@@ -59,7 +57,15 @@ function App() {
               <Route path="workers">
                 <Route
                   index
-                  element={role === "user" ? <Worker /> : <Unauthorized />}
+                  element={
+                    role === "" ? (
+                      <Loading />
+                    ) : role === "user" ? (
+                      <Worker />
+                    ) : (
+                      <Unauthorized />
+                    )
+                  }
                 />
                 <Route path=":workerid">
                   <Route index element={<WorkerProfile />} />
@@ -69,13 +75,29 @@ function App() {
 
               <Route
                 path="myprojects"
-                element={role === "user" ? <MyProjects /> : <Unauthorized />}
+                element={
+                  role === "" ? (
+                    <Loading />
+                  ) : role === "user" ? (
+                    <MyProjects />
+                  ) : (
+                    <Unauthorized />
+                  )
+                }
               />
 
               <Route path="projects">
                 <Route
                   index
-                  element={role === "worker" ? <Projects /> : <Unauthorized />}
+                  element={
+                    role === "" ? (
+                      <Loading />
+                    ) : role === "worker" ? (
+                      <Projects />
+                    ) : (
+                      <Unauthorized />
+                    )
+                  }
                 />
               </Route>
             </Route>

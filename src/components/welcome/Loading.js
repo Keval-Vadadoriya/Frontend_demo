@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/styles";
 
-function Unauthorized() {
+function Loading() {
   const theme = useTheme();
   return (
     <>
@@ -16,18 +16,10 @@ function Unauthorized() {
           backgroundColor: theme.palette.fifth.light,
         }}
       >
-        <Typography
-          variant="h1"
-          component="span"
-          gutterBottom
-          color={theme.palette.secondary.main}
-          marginLeft="10px"
-        >
-          Unauthorized Access
-        </Typography>
+        <CircularProgress size={100} disableShrink />
       </Box>
     </>
   );
 }
 
-export default Unauthorized;
+export default Loading;

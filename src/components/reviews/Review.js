@@ -36,14 +36,14 @@ const Review = (props) => {
   const [description, setDescription] = useState("");
   const [review, setReview] = useState(0);
   const [initialRating, setInitialRating] = useState(0);
-  
+
   //redux states
   const role = useSelector((state) => state.login.role);
   const { status, reviews, errorMessage } = useSelector(
     (state) => state.reviews
-    );
-    
-    let reviewList;
+  );
+
+  let reviewList;
 
   //getting reviews
   useEffect(() => {
@@ -53,7 +53,7 @@ const Review = (props) => {
     if (role === "worker") {
       dispatch(getReviews({ workerId: props.workerId }));
     }
-  }, [role]);
+  }, [role, dispatch, props.workerId, workerid.id]);
 
   //handling success and error
   useEffect(() => {
@@ -77,7 +77,7 @@ const Review = (props) => {
       );
       dispatch(reviewActions.setErrorMessage({ errorMessage: "" }));
     }
-  }, [status, errorMessage]);
+  }, [status, errorMessage, dispatch]);
 
   //
   const changeDescriptionHandler = (event) => {

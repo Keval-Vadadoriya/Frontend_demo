@@ -50,8 +50,7 @@ const LoginForm = () => {
   const { status: verifyStatus, errorMessage: verifyerrorMessage } =
     useSelector((state) => state.signup);
 
-
-      //navigete
+  //navigete
   useEffect(() => {
     if (
       token &&
@@ -60,7 +59,7 @@ const LoginForm = () => {
     ) {
       navigate("/");
     }
-  }, [token, status, verifyStatus]);
+  }, [token, status, verifyStatus,navigate]);
 
   //handling error, success and dialog
   useEffect(() => {
@@ -118,7 +117,7 @@ const LoginForm = () => {
       setForgotDialog(false);
       setVerifyDialog(true);
     }
-  }, [status, verifyStatus, errorMessage,verifyerrorMessage]);
+  }, [status, verifyStatus, errorMessage, verifyerrorMessage,dispatch]);
 
   //dialogs
   const handleVerifyUserClose = () => {
@@ -152,7 +151,6 @@ const LoginForm = () => {
     };
     dispatch(forgotPassword({ body }));
   };
-
 
   //Submit Handler
   const onSubmitHandler = (event) => {

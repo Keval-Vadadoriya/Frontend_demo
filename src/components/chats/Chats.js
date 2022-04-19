@@ -26,13 +26,11 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontSize: 20,
     padding: 5,
-    position: "-webkit-sticky",
     position: "sticky",
     top: 0,
   },
   sendMessage: {
     backgroundColor: theme.palette.secondary.main,
-    position: "-webkit-sticky",
     position: "sticky",
     margin: 0,
     borderRadius: "5px",
@@ -86,7 +84,6 @@ function Chats() {
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
   useEffect(() => {
     scrollToBottom();
   }, [chats[receiverId]]);
@@ -95,21 +92,23 @@ function Chats() {
   useEffect(() => {
     if (data) {
       socket.emit(
-        "delivered",{
-        messageId:data.message._id,
-        sender:data.sender,
-        receiver:data.receiver,
-        role:data.role,
-        active:receiverId === data.sender ? true : false},
+        "delivered",
+        {
+          messageId: data.message._id,
+          sender: data.sender,
+          receiver: data.receiver,
+          role: data.role,
+          active: receiverId === data.sender ? true : false,
+        },
         (response) => {
           dispatch(chatActions.setChatList({ list: response.chatList }));
         }
       );
     }
-  }, [data]);
+  }, [data, dispatch, socket]);
 
   //getting messages and delivered status
-  useEffect( () => {
+  useEffect(() => {
     socket.removeAllListeners();
 
     socket.on("message", (data) => {
@@ -131,31 +130,38 @@ function Chats() {
       );
     });
     dispatch(snackbarActions.setPage({ page: false }));
-  }, []);
+  }, [dispatch, socket, receiverId]);
 
   //adding to chatlist and getting chats
   useEffect(() => {
     if (userId && role) {
-      socket.emit("addToChatList", {senderId:userId, role, receiverId},(response)=>{
-        if(response.status==='success'){
-      socket.emit("getchats", {userId, role, receiverId}, (response) => {
-            dispatch(
-              chatActions.setChats({
-                chats: response.chats,
-                role,
-                receiverId,
-              })
+      socket.emit(
+        "addToChatList",
+        { senderId: userId, role, receiverId },
+        (response) => {
+          if (response.status === "success") {
+            socket.emit(
+              "getchats",
+              { userId, role, receiverId },
+              (response) => {
+                dispatch(
+                  chatActions.setChats({
+                    chats: response.chats,
+                    role,
+                    receiverId,
+                  })
+                );
+                dispatch(chatActions.setChatList({ list: response.chatList }));
+              }
             );
-            dispatch(chatActions.setChatList({ list: response.chatList }));
-          });
+          }
         }
-      });
+      );
     }
-  }, [receiverId, userId, role]);
-
+  }, [receiverId, userId, role, dispatch, socket]);
 
   //sending message
-  const sendMessageHandler =  (event) => {
+  const sendMessageHandler = (event) => {
     event.preventDefault();
     setMessage("");
     let createMessage = {
@@ -267,7 +273,6 @@ function Chats() {
               <Typography
                 sx={{
                   display: "inline",
-                  display: "flex",
                   alignItems: "center",
                   marginLeft: 3,
                   fontSize: { xs: 20, md: 25 },

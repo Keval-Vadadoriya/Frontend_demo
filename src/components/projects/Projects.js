@@ -16,7 +16,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   useMediaQuery,
   TextField,
@@ -49,7 +48,7 @@ const Projects = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
-  
+
   //states
   const [location, setLocation] = useState("none");
   const [profession, setProfession] = useState("none");
@@ -57,16 +56,16 @@ const Projects = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("none");
   const [filter, setFilter] = useState(false);
-  
+
   //redux states
   const { projects, count } = useSelector((state) => state.project);
-  
+
   let projectList;
 
   //getting all projects
   useEffect(() => {
     dispatch(getAllProjects({ search: "null", skip: 0 }));
-  }, []);
+  }, [dispatch]);
 
   //sorting data
   const changeSortHandler = (event) => {
@@ -132,7 +131,6 @@ const Projects = () => {
     dispatch(filterProjects({ location, profession, sort, skip: 0 }));
   };
 
-  
   //search project
   const searchHandler = (event) => {
     if (event.target.value === "") {
@@ -141,7 +139,7 @@ const Projects = () => {
       dispatch(getAllProjects({ search: event.target.value, skip: 0 }));
     }
   };
-  
+
   //projectlist ui
   if (projects) {
     projectList = projects.map((project) => (
@@ -151,7 +149,7 @@ const Projects = () => {
 
   return (
     <Fragment>
-      <Fade in={true} timeout={1000}>
+      <Fade in={true} timeout={700}>
         <Box
           sx={{
             display: "flex",

@@ -5,9 +5,7 @@ import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTheme } from "@mui/styles";
-import logo from "../../logo.jpg";
 import logo2 from "../../logo2.png";
-import logo3 from "../../logo3.png";
 import ChatSharpIcon from "@mui/icons-material/ChatSharp";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
@@ -40,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 900,
   },
   link: {
-    margin: "5px",
     backgroundColor: theme.palette.third.light,
     color: "black",
     margin: 10,

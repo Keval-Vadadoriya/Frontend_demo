@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Box } from "@mui/system";
 
@@ -23,8 +23,7 @@ const Home = () => {
         navigate("/projects");
       }
     }
-  }, [location]);
-
+  }, [location, navigate, role]);
 
   return (
     <>

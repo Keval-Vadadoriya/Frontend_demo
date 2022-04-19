@@ -80,9 +80,7 @@ const MyProjects = () => {
       );
       dispatch(myprojectActions.setErrorMessage({ errorMessage: "" }));
     }
-  }, [status, errorMessage]);
-
- 
+  }, [status, errorMessage, dispatch]);
 
   //posting project
   const SubmitHandler = (event) => {
@@ -99,28 +97,26 @@ const MyProjects = () => {
     );
   };
 
-    //removing project
-    const removeProjectHandler = (projectId) => {
-      if (window.confirm("Are You Sure You Want to Remove Project?")) {
-        dispatch(removeProject({ projectId }));
-        dispatch(getMyProjects({ skip: 0 }));
-      }
-    };
+  //removing project
+  const removeProjectHandler = (projectId) => {
+    if (window.confirm("Are You Sure You Want to Remove Project?")) {
+      dispatch(removeProject({ projectId }));
+      dispatch(getMyProjects({ skip: 0 }));
+    }
+  };
 
+  const addProjectHandler = () => {
+    setAddProject(true);
+  };
+  const handleClose = () => {
+    setAddProject(false);
+  };
+  const handleChange = (event, value) => {
+    setPage(value);
+    dispatch(getMyProjects({ skip: (value - 1) * 10 }));
+  };
 
-    const addProjectHandler = () => {
-      setAddProject(true);
-    };
-    const handleClose = () => {
-      setAddProject(false);
-    };
-    const handleChange = (event, value) => {
-      setPage(value);
-      dispatch(getMyProjects({ skip: (value - 1) * 10 }));
-    };
-
-
-  //change handlers  
+  //change handlers
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };
@@ -137,12 +133,10 @@ const MyProjects = () => {
     setDescription(event.target.value);
   };
 
-
-
   //getting projectlist
-  useEffect( () => {
+  useEffect(() => {
     dispatch(getMyProjects({ skip: 0 }));
-  }, []);
+  }, [dispatch]);
 
   //projectlist ui
   if (projects) {

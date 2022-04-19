@@ -7,7 +7,6 @@ import { useTheme } from "@mui/styles";
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   link: {
-    margin: "5px",
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.third.light,
     margin: 10,
@@ -45,14 +44,12 @@ function WorkerProfile() {
 
   //redux states
   const token = useSelector((state) => state.login.token);
-  const { status, worker, errorMessage } = useSelector(
-    (state) => state.workerslist
-  );
+  const { worker } = useSelector((state) => state.workerslist);
 
   //get worker
   useEffect(() => {
     dispatch(getWorker({ token, workerId: workerid.workerid }));
-  }, []);
+  }, [dispatch, token, workerid.workerid]);
 
   return (
     <Fade in={true} timeout={1000}>

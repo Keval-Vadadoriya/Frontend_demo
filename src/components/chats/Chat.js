@@ -73,12 +73,12 @@ const Chat = () => {
         );
       }
     });
-  }, []);
+  }, [dispatch, socket, role]);
   useEffect(() => {
     if (userId && role) {
-      socket.emit("getchatlist", {userId, role});
+      socket.emit("getchatlist", { userId, role });
     }
-  }, [userId, role]);
+  }, [userId, role, socket]);
 
   //chatlist ui
   let chatListUi;
