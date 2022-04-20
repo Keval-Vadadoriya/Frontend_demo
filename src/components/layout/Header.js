@@ -168,7 +168,6 @@ const Header = () => {
                       vertical: "bottom",
                       horizontal: "left",
                     }}
-                    keepMounted
                     transformOrigin={{
                       vertical: "top",
                       horizontal: "left",
@@ -433,7 +432,6 @@ const Header = () => {
                     vertical: "top",
                     horizontal: "right",
                   }}
-                  keepMounted
                   transformOrigin={{
                     vertical: "top",
                     horizontal: "right",
