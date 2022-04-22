@@ -88,6 +88,7 @@ const Header = () => {
   const token = useSelector((state) => state.login.token);
   const role = useSelector((state) => state.login.role);
   const user = useSelector((state) => state.user.user);
+  const socket = useSelector((state) => state.socket.socket);
 
   //states
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -101,6 +102,8 @@ const Header = () => {
     setLogout(false);
     setAnchorElUser(null);
 
+    socket.emit("disconnectn", user._id);
+    socket.disconnect();
     localStorage.clear();
     dispatch(chatActions.reset());
     dispatch(myprojectActions.reset());
