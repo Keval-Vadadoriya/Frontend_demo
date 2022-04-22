@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Card,
   CardContent,
@@ -5,11 +7,23 @@ import {
   Button,
   CardActions,
   Container,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/styles";
 
-function MyProjectCard({ project, onClick }) {
+function MyProjectCard({ project, removeProjectHandler }) {
   const theme = useTheme();
+  const matches = useMediaQuery("(max-width:600px)");
+  const [removeProject, setRemoveProject] = useState(false);
+
+  const handleRemoveProjectClose = () => {
+    setRemoveProject(false);
+  };
   return (
     <Container>
       <Card
@@ -88,7 +102,9 @@ function MyProjectCard({ project, onClick }) {
         </CardContent>
         <CardActions>
           <Button
-            onClick={onClick.bind(null, project._id)}
+            onClick={() => {
+              setRemoveProject(true);
+            }}
             sx={{
               marginLeft: "15px",
               textDecoration: "none",
@@ -108,6 +124,32 @@ function MyProjectCard({ project, onClick }) {
           </Button>
         </CardActions>
       </Card>
+      <Dialog
+        fullScreen={matches}
+        open={removeProject}
+        onClose={handleRemoveProjectClose}
+      >
+        <DialogTitle
+          sx={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.third.light,
+            fontFamily: "Arvo",
+          }}
+        >
+          Remove Project
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText marginTop={3}>
+            Are You Sure You Want to Remove Project?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleRemoveProjectClose}>Cancel</Button>
+          <Button onClick={removeProjectHandler.bind(null, project._id)}>
+            Remove
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

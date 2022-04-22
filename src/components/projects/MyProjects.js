@@ -105,10 +105,8 @@ const MyProjects = () => {
 
   //removing project
   const removeProjectHandler = (projectId) => {
-    if (window.confirm("Are You Sure You Want to Remove Project?")) {
-      dispatch(removeProject({ projectId }));
-      dispatch(getMyProjects({ skip: 0 }));
-    }
+    dispatch(removeProject({ projectId }));
+    dispatch(getMyProjects({ skip: 0 }));
   };
 
   const addProjectHandler = () => {
@@ -117,6 +115,7 @@ const MyProjects = () => {
   const handleClose = () => {
     setAddProject(false);
   };
+
   const handleChange = (event, value) => {
     setPage(value);
     dispatch(getMyProjects({ skip: (value - 1) * 10 }));
@@ -149,7 +148,7 @@ const MyProjects = () => {
     projectList = projects.map((project) => (
       <ProjectCard
         project={project}
-        onClick={removeProjectHandler}
+        removeProjectHandler={removeProjectHandler}
         key={project._id}
       />
     ));
@@ -211,6 +210,8 @@ const MyProjects = () => {
                 sx={{ backgroundColor: theme.palette.third.extra }}
               />
             </Stack>
+
+            {/* Add Project Dialog */}
             <Dialog
               fullScreen={matches}
               open={addProject}

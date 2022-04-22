@@ -23,6 +23,12 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  useMediaQuery,
 } from "@mui/material";
 
 //redux
@@ -76,6 +82,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const classes = useStyles(theme);
+  const matches = useMediaQuery("(max-width:600px)");
 
   //redux states
   const token = useSelector((state) => state.login.token);
@@ -85,27 +92,27 @@ const Header = () => {
   //states
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [logout, setLogout] = useState(false);
 
   const loginHandler = () => {
     navigate("/login", { replace: true });
   };
   const logoutHandler = () => {
+    setLogout(false);
     setAnchorElUser(null);
 
-    if (window.confirm("Are You Sure,You Want to Logout?")) {
-      localStorage.clear();
-      dispatch(chatActions.reset());
-      dispatch(myprojectActions.reset());
-      dispatch(projectActions.reset());
-      dispatch(reviewActions.reset());
-      dispatch(signupActions.reset());
-      dispatch(workersActions.reset());
-      dispatch(loginActions.reset());
-      dispatch(snackbarActions.reset());
-      dispatch(socketActions.reset());
-      dispatch(userActions.reset());
-      navigate("/");
-    }
+    localStorage.clear();
+    dispatch(chatActions.reset());
+    dispatch(myprojectActions.reset());
+    dispatch(projectActions.reset());
+    dispatch(reviewActions.reset());
+    dispatch(signupActions.reset());
+    dispatch(workersActions.reset());
+    dispatch(loginActions.reset());
+    dispatch(snackbarActions.reset());
+    dispatch(socketActions.reset());
+    dispatch(userActions.reset());
+    navigate("/");
   };
 
   const handleOpenNavMenu = (event) => {
@@ -114,8 +121,11 @@ const Header = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+  const handleLogoutClose = () => {
+    setLogout(false);
+  };
 
-  const handleCloseNavMenu = (event) => {
+  const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
@@ -452,7 +462,14 @@ const Header = () => {
                   >
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      setAnchorElUser(false);
+                      setLogout(true);
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
                 </Menu>
               </Box>
             )}
@@ -481,6 +498,26 @@ const Header = () => {
           </Toolbar>
         </Container>
       </AppBar>
+      <Dialog fullScreen={matches} open={logout} onClose={handleLogoutClose}>
+        <DialogTitle
+          sx={{
+            backgroundColor: theme.palette.secondary.main,
+            color: theme.palette.third.light,
+            fontFamily: "Arvo",
+          }}
+        >
+          Logout
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText marginTop={3}>
+            Are You Sure You Want to Logout?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLogoutClose}>Cancel</Button>
+          <Button onClick={logoutHandler}>Logout</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
