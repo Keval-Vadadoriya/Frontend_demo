@@ -136,12 +136,16 @@ const Projects = () => {
   };
 
   //search project
+  let searchTimeout;
   const searchHandler = (event) => {
-    if (event.target.value === "") {
-      dispatch(getAllProjects({ search: "null", skip: 0 }));
-    } else {
-      dispatch(getAllProjects({ search: event.target.value, skip: 0 }));
-    }
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      if (event.target.value === "") {
+        dispatch(getAllProjects({ search: "null", skip: 0 }));
+      } else {
+        dispatch(getAllProjects({ search: event.target.value, skip: 0 }));
+      }
+    }, 1000);
   };
 
   //projectlist ui

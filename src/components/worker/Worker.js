@@ -140,12 +140,16 @@ const Worker = () => {
   };
 
   //search
+  let searchTimeout;
   const searchHandler = (event) => {
-    if (event.target.value === "") {
-      dispatch(getAllWorkers({ search: "null", skip: 0 }));
-    } else {
-      dispatch(getAllWorkers({ search: event.target.value, skip: 0 }));
-    }
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      if (event.target.value === "") {
+        dispatch(getAllWorkers({ search: "null", skip: 0 }));
+      } else {
+        dispatch(getAllWorkers({ search: event.target.value, skip: 0 }));
+      }
+    }, 1000);
   };
 
   //workers list ui
