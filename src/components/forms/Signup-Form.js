@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { loginActions } from "../../store/login-slice";
+import { loginActions } from "../../store/actions/login-actions";
 import {
   signupActions,
   signupUser,
@@ -28,7 +28,7 @@ import {
   Fade,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { snackbarActions } from "../../store/snackbar-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { useTheme } from "@mui/styles";
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({

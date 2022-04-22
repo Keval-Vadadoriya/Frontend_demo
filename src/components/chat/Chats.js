@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { chatActions } from "../../store/actions/chat-actions";
+import { chatActions } from "../../store/slice/chat-slice";
 import {
   Button,
   Grid,
@@ -14,10 +14,10 @@ import {
   Fade,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { socketActions } from "../../store/socket-slice";
+import { socketActions } from "../../store/slice/socket-slice";
 import { makeStyles, useTheme } from "@mui/styles";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { snackbarActions } from "../../store/snackbar-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 
 const useStyles = makeStyles((theme) => ({
   chatOwner: {

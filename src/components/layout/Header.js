@@ -1,5 +1,4 @@
 import { useNavigate, Link, NavLink } from "react-router-dom";
-import { loginActions } from "../../store/login-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
@@ -22,15 +21,16 @@ import {
   Tooltip,
   MenuItem,
 } from "@mui/material";
-import { chatActions } from "../../store/actions/chat-actions";
+import { chatActions } from "../../store/slice/chat-slice";
 import { myprojectActions } from "../../store/actions/myproject-actions";
+import { loginActions } from "../../store/actions/login-actions";
 import { projectActions } from "../../store/actions/project-actions";
 import { reviewActions } from "../../store/actions/review-actions";
 import { signupActions } from "../../store/actions/signup-actions";
 import { workersActions } from "../../store/actions/workers-action";
-import { snackbarActions } from "../../store/snackbar-slice";
-import { socketActions } from "../../store/socket-slice";
-import { userActions } from "../../store/user-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
+import { socketActions } from "../../store/slice/socket-slice";
+import { userActions } from "../../store/actions/user-actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {

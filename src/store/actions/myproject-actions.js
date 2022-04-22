@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getMyProjects } from "./project-actions";
-import baseService from "../baseService";
+import baseService from "../../API/baseService";
 const initialState = {
   status: "idle",
   errorMessage: "",

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Button, Slide, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { loginActions } from "../../store/login-slice";
+import { loginActions } from "../../store/actions/login-actions";
 import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Grid } from "@mui/material";

@@ -29,7 +29,6 @@ function NotFound() {
           component="span"
           gutterBottom
           color={theme.palette.secondary.main}
-          // color="rgb(104, 104, 104)"
           marginLeft="10px"
         >
           Not Found

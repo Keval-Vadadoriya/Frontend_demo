@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
-import { editProfile, userActions } from "../../store/user-slice";
+import { editProfile, userActions } from "../../store/actions/user-actions";
 import Review from "../reviews/Review";
 import React from "react";
 import {
@@ -26,7 +26,7 @@ import {
   Fade,
 } from "@mui/material";
 import Slide from "@mui/material/Slide";
-import { snackbarActions } from "../../store/snackbar-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { useTheme } from "@mui/styles";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

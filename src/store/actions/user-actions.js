@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginActions } from "./login-slice";
-import baseService from "./baseService";
+import { loginActions } from "./login-actions";
+import baseService from "../../API/baseService";
 const initialState = {
   status: "loading data",
   errorMessage: "",

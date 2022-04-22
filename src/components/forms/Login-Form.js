@@ -8,7 +8,7 @@ import {
   forgotPassword,
   verifyPassword,
   loginActions,
-} from "../../store/login-slice";
+} from "../../store/actions/login-actions";
 import { signupActions, verifyUser } from "../../store/actions/signup-actions";
 
 import {
@@ -25,7 +25,7 @@ import {
   Grid,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { snackbarActions } from "../../store/snackbar-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { useTheme } from "@mui/styles";
 
 const LoginForm = () => {
@@ -59,7 +59,7 @@ const LoginForm = () => {
     ) {
       navigate("/");
     }
-  }, [token, status, verifyStatus,navigate]);
+  }, [token, status, verifyStatus, navigate]);
 
   //handling error, success and dialog
   useEffect(() => {
@@ -117,7 +117,7 @@ const LoginForm = () => {
       setForgotDialog(false);
       setVerifyDialog(true);
     }
-  }, [status, verifyStatus, errorMessage, verifyerrorMessage,dispatch]);
+  }, [status, verifyStatus, errorMessage, verifyerrorMessage, dispatch]);
 
   //dialogs
   const handleVerifyUserClose = () => {
@@ -188,7 +188,6 @@ const LoginForm = () => {
       <Fade in={true} timeout={500}>
         <Box
           sx={{
-            // marginTop: 8,
             height: "92.5vh",
             width: "100vw",
             backgroundImage:
@@ -201,7 +200,6 @@ const LoginForm = () => {
           <Box
             sx={{
               backdropFilter: "blur(5px)",
-              // marginTop: 8,
               height: "92.5vh",
               width: "100vw",
               display: "flex",
@@ -398,7 +396,7 @@ const LoginForm = () => {
         </DialogActions>
       </Dialog>
 
-      {/* forgot Dialogue */}
+      {/* forgot password Dialogue */}
       <Dialog
         fullScreen={matches}
         open={forgotDialog}

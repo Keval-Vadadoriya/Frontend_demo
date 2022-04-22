@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { userActions } from "../user-slice";
-import { loginActions } from "../login-slice";
-import baseService from "../baseService";
+import { userActions } from "./user-actions";
+import { loginActions } from "./login-actions";
+import baseService from "../../API/baseService";
 const initialState = {
   status: "idle",
   errorMessage: "",

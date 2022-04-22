@@ -97,7 +97,7 @@ const Projects = () => {
     }
   };
 
-  //change handlers42
+  //change handlers
   const changeLocationHandler = (event) => {
     setLocation(event.target.value);
   };

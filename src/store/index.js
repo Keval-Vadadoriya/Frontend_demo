@@ -1,14 +1,14 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import login from "./login-slice";
-import user, { getUser } from "./user-slice";
-import socket from "./socket-slice";
+import login from "./actions/login-actions";
 import signup from "./actions/signup-actions";
-import workerslist from "./actions/workers-action";
 import reviews from "./actions/review-actions";
-import chat from "./actions/chat-actions";
 import project from "./actions/project-actions";
+import workerslist from "./actions/workers-action";
 import myproject from "./actions/myproject-actions";
-import snackbar from "./snackbar-slice";
+import user, { getUser } from "./actions/user-actions";
+import chat from "./slice/chat-slice";
+import socket from "./slice/socket-slice";
+import snackbar from "./slice/snackbar-slice";
 
 const customizedMiddleware = getDefaultMiddleware({
   serializableCheck: false,

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import WorkerCard from "./WorkerCard";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { snackbarActions } from "../../store/snackbar-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 import WorkerFilter from "./WorkerFilter";
 import {
   Stack,

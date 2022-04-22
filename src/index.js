@@ -5,7 +5,7 @@ import "./index.css";
 
 import App from "./App";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import store from "./store/index";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/styles";
 

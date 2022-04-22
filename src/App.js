@@ -10,8 +10,8 @@ import Projects from "./components/projects/Projects";
 import MyProjects from "./components/my projects/MyProjects";
 import Profile from "./components/profile/Profile";
 import Review from "./components/reviews/Review";
-import Chat from "./components/chats/Chat";
-import Chats from "./components/chats/Chats";
+import Chat from "./components/chat/Chat";
+import Chats from "./components/chat/Chats";
 import Home from "./components/Home/Home";
 import WorkerProfile from "./components/worker/WorkerProfile";
 import Welcome from "./components/welcome/Welcome";
@@ -23,7 +23,7 @@ import Loading from "./components/welcome/Loading";
 import { Box, Snackbar, Alert, Slide } from "@mui/material";
 
 //Actions
-import { snackbarActions } from "./store/snackbar-slice";
+import { snackbarActions } from "./store/slice/snackbar-slice";
 
 function App() {
   const dispatch = useDispatch();

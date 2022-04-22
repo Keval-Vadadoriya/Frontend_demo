@@ -2,9 +2,11 @@ import { Fragment, useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Fade, Grid, Typography } from "@mui/material";
-import { chatActions } from "../../store/actions/chat-actions";
 import { List, ListItem, Avatar } from "@mui/material";
 import { makeStyles, useTheme } from "@mui/styles";
+import { chatActions } from "../../store/slice/chat-slice";
+
+//design
 const useStyles = makeStyles((theme) => ({
   chat: {
     position: "sticky",
@@ -50,6 +52,8 @@ const Chat = () => {
   const classes = useStyles(theme);
   const dispatch = useDispatch();
 
+  let chatListUi;
+
   //redux states
   const userId = useSelector((state) => state.user.user._id);
   const userName = useSelector((state) => state.user.user.name);
@@ -81,7 +85,6 @@ const Chat = () => {
   }, [userId, role, socket]);
 
   //chatlist ui
-  let chatListUi;
   if (chatList.length !== 0) {
     chatListUi = chatList.map((worker) => {
       return (
