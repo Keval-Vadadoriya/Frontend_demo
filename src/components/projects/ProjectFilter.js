@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Grid,
   InputLabel,
@@ -8,7 +7,15 @@ import {
   Button,
 } from "@mui/material";
 import { useTheme } from "@mui/styles";
-const ProjectFilter = (props) => {
+
+const ProjectFilter = ({
+  profession,
+  location,
+  clearFilter,
+  filterProjectsBy,
+  changeLocationHandler,
+  changeProfessionHandler,
+}) => {
   const theme = useTheme();
   return (
     <Grid
@@ -16,7 +23,7 @@ const ProjectFilter = (props) => {
       spacing={2}
       component="form"
       marginTop="1px"
-      onSubmit={props.filterProjectsBy}
+      onSubmit={filterProjectsBy}
     >
       <Grid item xs={12}>
         <FormControl fullWidth>
@@ -24,9 +31,9 @@ const ProjectFilter = (props) => {
           <Select
             labelId="profession"
             id="profession"
-            value={props.profession}
+            value={profession}
             label="Profession"
-            onChange={props.changeProfessionHandler}
+            onChange={changeProfessionHandler}
           >
             <MenuItem value={"none"} disabled hidden>
               {"Select Profession"}
@@ -43,9 +50,9 @@ const ProjectFilter = (props) => {
           <Select
             labelId="location"
             id="location"
-            value={props.location}
+            value={location}
             label="Location"
-            onChange={props.changeLocationHandler}
+            onChange={changeLocationHandler}
           >
             <MenuItem value={"none"} disabled hidden>
               {"Select Location"}
@@ -91,7 +98,7 @@ const ProjectFilter = (props) => {
               color: theme.palette.third.light,
             },
           }}
-          onClick={props.clearFilter}
+          onClick={clearFilter}
         >
           Clear
         </Button>

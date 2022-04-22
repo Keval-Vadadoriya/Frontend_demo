@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Fade, useMediaQuery } from "@mui/material";
 
+//redux
 import {
   loggedInUser,
   forgotPassword,
@@ -11,8 +11,11 @@ import {
 } from "../../store/actions/login-actions";
 import { signupActions, verifyUser } from "../../store/actions/signup-actions";
 
+//mui
 import {
   Dialog,
+  Fade,
+  useMediaQuery,
   DialogTitle,
   DialogContent,
   DialogContentText,

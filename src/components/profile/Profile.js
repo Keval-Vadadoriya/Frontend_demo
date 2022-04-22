@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import EditIcon from "@mui/icons-material/Edit";
-import { editProfile, userActions } from "../../store/actions/user-actions";
-import Review from "../reviews/Review";
-import React from "react";
+
+//components
+import Review from "../worker/Review";
+
+//mui
 import {
   Avatar,
   Container,
@@ -24,12 +25,17 @@ import {
   DialogTitle,
   useMediaQuery,
   Fade,
+  Slide,
 } from "@mui/material";
-import Slide from "@mui/material/Slide";
-import { snackbarActions } from "../../store/slice/snackbar-slice";
+import EditIcon from "@mui/icons-material/Edit";
 import { useTheme } from "@mui/styles";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+//redux
+import { editProfile, userActions } from "../../store/actions/user-actions";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
+
+//transition
+const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 

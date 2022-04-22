@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
+//redux
 import { chatActions } from "../../store/slice/chat-slice";
+import { socketActions } from "../../store/slice/socket-slice";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
+
+//mui
 import {
   Button,
   Grid,
@@ -13,12 +18,11 @@ import {
   FormControl,
   Fade,
 } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
-import { socketActions } from "../../store/slice/socket-slice";
 import { makeStyles, useTheme } from "@mui/styles";
+import SendIcon from "@mui/icons-material/Send";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { snackbarActions } from "../../store/slice/snackbar-slice";
 
+//design
 const useStyles = makeStyles((theme) => ({
   chatOwner: {
     backgroundColor: theme.palette.secondary.main,

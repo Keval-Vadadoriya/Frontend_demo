@@ -1,10 +1,14 @@
 import { Fragment, useEffect } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
+//redux
+import { chatActions } from "../../store/slice/chat-slice";
+
+//mui
 import { Box, Fade, Grid, Typography } from "@mui/material";
 import { List, ListItem, Avatar } from "@mui/material";
 import { makeStyles, useTheme } from "@mui/styles";
-import { chatActions } from "../../store/slice/chat-slice";
 
 //design
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.third.light,
   },
 }));
+
 const Chat = () => {
   const theme = useTheme();
   const classes = useStyles(theme);

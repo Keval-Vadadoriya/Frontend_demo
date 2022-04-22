@@ -1,7 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
-import ProjectCard from "./ProjectCard";
+import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+//components
+import ProjectCard from "./ProjectCard";
 import ProjectFilter from "./ProjectFilter";
+
+//mui
 import {
   Stack,
   Pagination,
@@ -23,13 +27,13 @@ import {
   Fade,
 } from "@mui/material";
 import { SearchTwoTone } from "@mui/icons-material";
+import { useTheme, makeStyles } from "@mui/styles";
 
+//redux
 import {
   filterProjects,
   getAllProjects,
 } from "../../store/actions/project-actions";
-import { useTheme } from "@mui/styles";
-import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   searchBar: {

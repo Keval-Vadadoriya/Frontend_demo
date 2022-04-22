@@ -7,17 +7,17 @@ import LoginForm from "./components/forms/Login-Form";
 import Header from "./components/layout/Header";
 import Worker from "./components/worker/Worker";
 import Projects from "./components/projects/Projects";
-import MyProjects from "./components/my projects/MyProjects";
+import MyProjects from "./components/projects/MyProjects";
 import Profile from "./components/profile/Profile";
-import Review from "./components/reviews/Review";
+import Review from "./components/worker/Review";
 import Chat from "./components/chat/Chat";
 import Chats from "./components/chat/Chats";
-import Home from "./components/Home/Home";
+import Home from "./components/layout/Home";
 import WorkerProfile from "./components/worker/WorkerProfile";
-import Welcome from "./components/welcome/Welcome";
-import Unauthorized from "./components/welcome/Unauthorized";
-import NotFound from "./components/welcome/NotFound";
-import Loading from "./components/welcome/Loading";
+import Welcome from "./components/general/Welcome";
+import Unauthorized from "./components/general/Unauthorized";
+import NotFound from "./components/general/NotFound";
+import Loading from "./components/general/Loading";
 
 //mui
 import { Box, Snackbar, Alert, Slide } from "@mui/material";

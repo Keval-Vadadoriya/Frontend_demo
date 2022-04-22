@@ -1,9 +1,20 @@
-import React, { Fragment, useEffect, useState } from "react";
-import WorkerCard from "./WorkerCard";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { snackbarActions } from "../../store/slice/snackbar-slice";
+
+//components
+import WorkerCard from "./WorkerCard";
 import WorkerFilter from "./WorkerFilter";
+
+//redux
+import { snackbarActions } from "../../store/slice/snackbar-slice";
+import {
+  workersActions,
+  getAllWorkers,
+  filterWorkers,
+} from "../../store/actions/workers-action";
+
+//mui
 import {
   Stack,
   Pagination,
@@ -20,15 +31,10 @@ import {
   InputAdornment,
   Fade,
 } from "@mui/material";
-
-import {
-  workersActions,
-  getAllWorkers,
-  filterWorkers,
-} from "../../store/actions/workers-action";
-import { useTheme } from "@mui/styles";
-import { makeStyles } from "@mui/styles";
+import { useTheme, makeStyles } from "@mui/styles";
 import { SearchTwoTone } from "@mui/icons-material";
+
+//design
 const useStyles = makeStyles((theme) => ({
   searchBar: {
     marginTop: "10px",

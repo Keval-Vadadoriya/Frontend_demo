@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, CircularProgress } from "@mui/material";
 import { useTheme } from "@mui/styles";
 

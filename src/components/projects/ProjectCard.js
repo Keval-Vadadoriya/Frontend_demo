@@ -1,9 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, Typography, CardActions } from "@mui/material";
 import { useTheme } from "@mui/styles";
 import { makeStyles } from "@mui/styles";
 
+//design
 const useStyles = makeStyles((theme) => ({
   projectCard: {
     margin: "5px",

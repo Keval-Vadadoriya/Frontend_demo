@@ -1,5 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Fragment, useEffect, useState } from "react";
+
+//components
 import ProjectCard from "./MyProjectCard";
+
+//mui
 import {
   Stack,
   Pagination,
@@ -21,16 +26,17 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { Add } from "@mui/icons-material";
+import { useTheme } from "@mui/styles";
+
+//redux
 import {
   myprojectActions,
   postProject,
   removeProject,
 } from "../../store/actions/myproject-actions";
+import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { getMyProjects } from "../../store/actions/project-actions";
-import { useTheme } from "@mui/styles";
 
 const MyProjects = () => {
   const theme = useTheme();

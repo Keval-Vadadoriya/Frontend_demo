@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useNavigate, Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { makeStyles } from "@mui/styles";
-import { useState } from "react";
+
+//logo
+import logo from "../../logo.png";
+
+//mui
+import { makeStyles, useTheme } from "@mui/styles";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useTheme } from "@mui/styles";
-import logo2 from "../../logo2.png";
 import ChatSharpIcon from "@mui/icons-material/ChatSharp";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
@@ -21,6 +24,8 @@ import {
   Tooltip,
   MenuItem,
 } from "@mui/material";
+
+//redux
 import { chatActions } from "../../store/slice/chat-slice";
 import { myprojectActions } from "../../store/actions/myproject-actions";
 import { loginActions } from "../../store/actions/login-actions";
@@ -32,6 +37,7 @@ import { snackbarActions } from "../../store/slice/snackbar-slice";
 import { socketActions } from "../../store/slice/socket-slice";
 import { userActions } from "../../store/actions/user-actions";
 
+//design
 const useStyles = makeStyles((theme) => ({
   root: {
     fontSize: "30px",
@@ -122,7 +128,7 @@ const Header = () => {
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Avatar
-              src={logo2}
+              src={logo}
               sx={{
                 mr: 2,
                 backgroundColor: "rgba(256,256,256,0)",

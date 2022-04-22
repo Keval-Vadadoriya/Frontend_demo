@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+
+//mui
 import {
   Box,
   Button,
@@ -10,13 +12,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { makeStyles, useTheme } from "@mui/styles";
+
+//redux
 import {
   reviewActions,
   addReview,
   getReviews,
 } from "../../store/actions/review-actions";
 import { snackbarActions } from "../../store/slice/snackbar-slice";
-import { makeStyles, useTheme } from "@mui/styles";
+
+//design
 const useStyles = makeStyles((theme) => ({
   review: {
     backgroundColor: theme.palette.third.extra,

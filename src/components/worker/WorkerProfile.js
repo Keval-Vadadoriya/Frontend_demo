@@ -1,10 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getWorker } from "../../store/actions/workers-action";
 import { useDispatch, useSelector } from "react-redux";
+
+//redux
+import { getWorker } from "../../store/actions/workers-action";
+
+//mui
 import { Box, Typography, Avatar, Rating, Grid, Fade } from "@mui/material";
-import { useTheme } from "@mui/styles";
-import { makeStyles } from "@mui/styles";
+import { useTheme, makeStyles } from "@mui/styles";
+
+//design
 const useStyles = makeStyles((theme) => ({
   link: {
     backgroundColor: theme.palette.secondary.main,

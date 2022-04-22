@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+
+//redux
 import { loginActions } from "../../store/actions/login-actions";
 import {
   signupActions,
@@ -8,6 +10,7 @@ import {
   verifyUser,
 } from "../../store/actions/signup-actions";
 
+//mui
 import {
   Dialog,
   DialogTitle,
@@ -29,8 +32,9 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { snackbarActions } from "../../store/slice/snackbar-slice";
-import { useTheme } from "@mui/styles";
-import { makeStyles } from "@mui/styles";
+import { useTheme, makeStyles } from "@mui/styles";
+
+//design
 const useStyles = makeStyles((theme) => ({
   input: {
     backgroundColor: "rgba(256,256,256,0)",
