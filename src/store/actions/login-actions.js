@@ -11,7 +11,6 @@ const initialState = {
 export const loggedInUser = createAsyncThunk(
   "login/loggedInUser",
   async (obj, getState) => {
-    // const states=getState.getState()
     const body = {
       email: obj.loginEmail,
       password: obj.loginPassword,
@@ -28,7 +27,6 @@ export const loggedInUser = createAsyncThunk(
       getState.dispatch(socketActions.setSocket());
 
       localStorage.setItem("token", "Bearer " + response.data.token);
-      // states.socket.socket.emit("setId",response.data.user._id)
       return response.data;
     } catch (e) {
       throw new Error(e.response.data.Error);

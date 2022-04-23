@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import socketIOClient from "socket.io-client";
 const initialState = {
-  socket: socketIOClient(  'http://127.0.0.1:3000'
-  ),
+  socket: socketIOClient(process.env.REACT_APP_HOST),
   data: null,
 };
 const socketSlice = createSlice({
@@ -10,8 +9,7 @@ const socketSlice = createSlice({
   initialState,
   reducers: {
     setSocket(state) {
-      state.socket = socketIOClient('http://127.0.0.1:3000'
-      );
+      state.socket = socketIOClient(process.env.REACT_APP_HOST);
     },
     setData(state, action) {
       state.data = action.payload.data;

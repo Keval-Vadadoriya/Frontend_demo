@@ -109,7 +109,9 @@ const Chat = () => {
           }
         >
           <Avatar
-            src={`${process.env.REACT_APP_HOST}/${worker.user.avatar}`}
+            src={`${process.env.REACT_APP_HOST}/${
+              worker.user ? worker.user.avatar : "uploads/default.jpg"
+            }`}
             sx={{ mardin: "10px" }}
           />
           <Typography

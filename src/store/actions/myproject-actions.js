@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getMyProjects } from "./project-actions";
+import { projectActions } from "./project-actions";
 import baseService from "../../API/baseService";
 const initialState = {
   status: "idle",
@@ -11,10 +11,12 @@ export const removeProject = createAsyncThunk(
   async ({ projectId }, getState) => {
     try {
       const response = await baseService.delete(`/removeproject/${projectId}`);
+      console.log(response);
+      getState.dispatch(
+        projectActions.setProjects({ projects: response.data.projects })
+      );
 
-      getState.dispatch(getMyProjects({ skip: 0 }));
-
-      return response.data;
+      return;
     } catch (e) {
       throw new Error(e.response.data.Error);
     }
@@ -26,9 +28,12 @@ export const postProject = createAsyncThunk(
   async (body, getState) => {
     try {
       const response = await baseService.post(`/project`, body);
+      console.log(response);
 
-      getState.dispatch(getMyProjects({ skip: 0 }));
-      return response.data;
+      getState.dispatch(
+        projectActions.setProjects({ projects: response.data.projects })
+      );
+      return;
     } catch (e) {
       throw new Error(e.response.data.Error);
     }

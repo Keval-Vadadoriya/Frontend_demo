@@ -24,11 +24,9 @@ export const editProfile = createAsyncThunk(
 );
 export const getUser = createAsyncThunk("user/getUser", async (_, getState) => {
   try {
-    // const states=getState.getState()
     const response = await baseService.get(`/getprofile`);
 
-      // states.socket.socket.emit("setId",response.data.user._id)
-      getState.dispatch(loginActions.setRole({ role: response.data.role }));
+    getState.dispatch(loginActions.setRole({ role: response.data.role }));
     return response.data;
   } catch (e) {
     throw new Error(e.response.data.Error);

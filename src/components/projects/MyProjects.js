@@ -106,7 +106,6 @@ const MyProjects = () => {
   //removing project
   const removeProjectHandler = (projectId) => {
     dispatch(removeProject({ projectId }));
-    dispatch(getMyProjects({ skip: 0 }));
   };
 
   const addProjectHandler = () => {
@@ -152,6 +151,7 @@ const MyProjects = () => {
         key={project._id}
       />
     ));
+    // projectList.reverse();
   }
 
   return (

@@ -271,7 +271,9 @@ function Chats() {
               sx={{ display: "flex", textDecoration: "none" }}
             >
               <Avatar
-                src={`${process.env.REACT_APP_HOST}/${chatsOwner?.avatar}`}
+                src={`${process.env.REACT_APP_HOST}/${
+                  chatsOwner ? chatsOwner.avatar : "uploads/default.jpg"
+                }`}
                 sx={{ marginLeft: 0 }}
               />
               <Typography

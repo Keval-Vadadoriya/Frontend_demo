@@ -58,6 +58,9 @@ export const projectSlice = createSlice({
     setErrorMessage(state, action) {
       state.errorMessage = action.payload.errorMessage;
     },
+    setProjects(state, action) {
+      state.projects = action.payload.projects;
+    },
     reset() {
       return initialState;
     },
