@@ -102,7 +102,7 @@ const Header = () => {
     setLogout(false);
     setAnchorElUser(null);
 
-    socket.emit("disconnectn", user._id);
+    socket.emit("disconnectUser", user._id);
     socket.disconnect();
     localStorage.clear();
     dispatch(chatActions.reset());

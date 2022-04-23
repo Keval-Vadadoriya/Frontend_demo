@@ -11,9 +11,24 @@ const Home = () => {
   const socket = useSelector((state) => state.socket.socket);
   const userId = useSelector((state) => state.user.user._id);
   const role = useSelector((state) => state.login.role);
-  if (userId) {
-    socket.emit("setId", userId);
-  }
+  
+// useEffect(()=>{
+//   return ()=>{
+//     console.log('guhfiug')
+//       socket.emit("disconnectn", userId);
+//       socket.disconnect();
+//   }
+// })
+// if (userId) {
+//   console.log("setId")
+//   socket.emit("setId", userId);
+// }
+  useEffect(()=>{
+    if (userId) {
+      console.log("setId")
+      socket.emit("setId", userId);
+    }
+  },[userId])
   useEffect(() => {
     if (location.pathname === "/") {
       if (role === "user") {

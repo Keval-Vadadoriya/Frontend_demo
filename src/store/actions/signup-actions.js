@@ -22,6 +22,7 @@ export const verifyUser = createAsyncThunk(
   "signup/verifyUser",
   async ({ otp }, getState) => {
     try {
+      // const states=getState.getState()
       const response = await baseService.post(`/verify/${otp}`);
 
       baseService.defaults.headers.common["Authorization"] =
@@ -34,6 +35,8 @@ export const verifyUser = createAsyncThunk(
       );
       getState.dispatch(loginActions.setRole({ role: response.data.role }));
       localStorage.setItem("token", "Bearer " + response.data.token);
+      // states.socket.socket.emit("setId",response.data.user._id)
+
       return response.data;
     } catch (e) {
       throw new Error(e.response.data.Error);
